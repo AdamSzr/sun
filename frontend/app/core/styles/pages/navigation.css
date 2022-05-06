@@ -1,0 +1,9 @@
+#navigationCompoment * td {
+  border: 1px solid black;
+  margin: 0;
+}
+
+#navigationComponent * table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
