@@ -6,7 +6,6 @@ import logo from "public/logo.png"
 import { v4 as uuidv4 } from "uuid"
 import fs from "fs"
 import path from "path"
-import { DRIVE_ROOT_DIR } from "app/settings/global"
 import createDirectory from "app/core/mutations/createDirectory"
 import addUser from "app/auth/mutations/addUser"
 import { User } from "@prisma/client"
@@ -34,6 +33,11 @@ const NavigationComponent = () => {
             <tr>
                 <td>DYSK</td>
                 <td colSpan={4}><a href="/drive">LINK</a></td>
+                
+            </tr>
+            <tr>
+            <td>WorkoutTimer</td>
+            <td colSpan={4}><a href="/workout/timer">LINK</a></td>
             </tr>
         </table>
     </div>
