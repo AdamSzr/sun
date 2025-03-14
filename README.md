@@ -6,3 +6,5 @@ Pack of usefull services, for local network in your home
 * player online
 * workout timer
 * fitatu
+* redis-cpy
+* 
