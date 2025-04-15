@@ -1,5 +1,5 @@
-import { success } from "@/app/responses";
+import { SuccessResponse } from "@/app/responses";
 
 export async function GET() {
-  return success
+  return SuccessResponse()
 }

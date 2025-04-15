@@ -5,3 +5,7 @@ GET http://localhost:3000/api/geo-cords
 
 ###
 POST http://localhost:3000/api/geo-cords
+
+
+###
+DELETE http://localhost:3000/api/geo-cords

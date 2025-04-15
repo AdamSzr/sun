@@ -8,26 +8,25 @@ export async function GET() {
 }
 
 
+type GeoCords = {lat:number,long:number}
 
-export async function POST() {
-  const data = {
-    ...generateRandomGeoPath(),
-  }
+export async function POST(request: Request) {
+  const cords:GeoCords = await request.json()
 
   await prisma.geoCord.create({data: {
-    ...data,
+    ...cords,
     path:{
      connect: { id:1 }
     }
   }})
 
-  return SuccessResponse(data)
+  return SuccessResponse(cords)
 }
 
 
-function generateRandomGeoPath( center = [52.0, 19.0], range = 0.1) {
-    const lat = center[0] + (Math.random() - 0.5) * range * 2;
-    const long = center[1] + (Math.random() - 0.5) * range * 2;
+export async function DELETE() {
+  await prisma.geoCord.deleteMany()
 
-    return {lat,long}
+  return SuccessResponse()
 }
+

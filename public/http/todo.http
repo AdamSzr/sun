@@ -1,0 +1,26 @@
+
+###
+GET http://localhost:3000/api/todo?done=true
+
+
+###
+POST http://localhost:3000/api/todo
+
+{
+    "name": "test3",
+    "description": "test",
+    "userId": 1
+}
+
+
+###
+PUT http://localhost:3000/api/todo
+
+{
+    "id": 4,
+    "done": true
+}
+
+
+###
+DELETE http://localhost:3000/api/todo
