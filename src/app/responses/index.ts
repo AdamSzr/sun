@@ -1,3 +1,4 @@
+import { ZodError } from "zod"
 import { apiErrors } from "./errors"
 
 
@@ -36,9 +37,30 @@ export const AnyErrorResponse = (value?:any) =>{
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const SuccessResponse = (item?:any) =>{
+export const SuccessResponse = (item?:any, headers?: HeadersInit) =>{
     return Response.json({
         success: true,
         item,
-    })
+    }, {headers})
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const SuccessItemsResponse = (items?:any, headers?: HeadersInit) =>{
+    return Response.json({
+        success: true,
+        items,
+    }, {headers})
+}
+
+
+export const ValidationResponse = <T>(error:ZodError<T>) =>{
+  const issue = error.issues.at(0)
+
+  if(!issue) throw Error('Error should have issues.')
+
+  return Response.json({
+    success: false,
+    code: 400,
+    message: `field: ${issue?.path} - ${issue?.message}`,
+  })
 }

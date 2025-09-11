@@ -1,4 +1,4 @@
-import { ApiErrorResponse, SuccessResponse } from "@/app/responses";
+import { ApiErrorResponse, SuccessItemsResponse } from "@/app/responses";
 import { prisma } from "@/lib/prisma";
 import { TodoItem } from "@prisma/client";
 import { NextRequest } from "next/server";
@@ -9,14 +9,14 @@ export async function GET(req:NextRequest) {
   const query = (done && ['true','false'].includes(done)) ? { done:done==='true' } : { }
   const todos = await prisma.todoItem.findMany({where:query})
 
-  return SuccessResponse({todos})
+  return SuccessItemsResponse({todos})
 }
 
 export async function POST(req:NextRequest) {
   const todoItem = await req.json()
   const todo = await prisma.todoItem.create({data:todoItem})
 
-  return SuccessResponse(todo)
+  return SuccessItemsResponse(todo)
 }
 
 export async function PUT(req:NextRequest) {
@@ -25,12 +25,12 @@ export async function PUT(req:NextRequest) {
 
   const item = await prisma.todoItem.update({where:{id:update.id}, data:update})
 
-  return SuccessResponse(item)
+  return SuccessItemsResponse(item)
 }
 
 export async function DELETE() {
 
   const item = await prisma.todoItem.deleteMany()
 
-  return SuccessResponse(item)
+  return SuccessItemsResponse(item)
 }

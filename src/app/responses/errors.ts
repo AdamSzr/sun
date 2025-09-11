@@ -2,6 +2,15 @@
 // drive errors -> from 10_000 to 19_999 drive errors
 
 export const apiErrors = {
+    // AUTH
+    0: 'USER NOT FOUND',
+    
+    
+    // 
+    400: 'Validation error',
+    401: 'Unauthorized',
+
+    // 
     500:`Unknown error`,
     501:`Exception occured`,
     // DRIVE

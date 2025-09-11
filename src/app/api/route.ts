@@ -1,8 +1,8 @@
-import { SuccessResponse } from "../responses";
+import { SuccessItemsResponse } from "../responses";
 import { apiErrors } from "../responses/errors";
 
 export async function GET() {
-  return SuccessResponse({
+  return SuccessItemsResponse({
     errors: apiErrors,
   })
 }

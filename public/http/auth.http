@@ -1,0 +1,29 @@
+POST http://localhost:3000/api/user
+
+{
+  "name":"adam",
+  "password":"adam"
+}
+
+
+###
+
+POST http://localhost:3000/api/auth
+
+{
+  "name":"adam",
+  "password":"adam"
+}
+
+
+###
+GET http://localhost:3000/api/auth/check
+Cookie: sessionId=cmffztpqa0003vl28vyxmat9f
+
+
+###
+POST http://localhost:3000/api/auth/logout
+Cookie: sessionId=cmffztpqa0003vl28vyxmat9f
+
+###
+GET http://localhost:3000/api/sessions

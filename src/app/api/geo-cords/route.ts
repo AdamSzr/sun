@@ -1,10 +1,10 @@
-import { SuccessResponse } from "@/app/responses"
+import { SuccessItemsResponse } from "@/app/responses"
 import { prisma } from "@/lib/prisma"
 
 export async function GET() {
   const geoCord = await prisma.geoCord.findMany()
 
-  return SuccessResponse({geoCord})
+  return SuccessItemsResponse({geoCord})
 }
 
 
@@ -20,13 +20,13 @@ export async function POST(request: Request) {
     }
   }})
 
-  return SuccessResponse(cords)
+  return SuccessItemsResponse(cords)
 }
 
 
 export async function DELETE() {
   await prisma.geoCord.deleteMany()
 
-  return SuccessResponse()
+  return SuccessItemsResponse()
 }
 

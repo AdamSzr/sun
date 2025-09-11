@@ -1,4 +1,4 @@
-import { AnyErrorResponse, ApiErrorResponse, SuccessResponse } from '@/app/responses';
+import { AnyErrorResponse, ApiErrorResponse, SuccessItemsResponse } from '@/app/responses';
 import { directoryExist, fileExists } from '@/utils/file';
 import { readFile, rm, writeFile } from 'fs/promises';
 import { type NextRequest } from 'next/server';
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     const exists = fileExists(fileFullPath)
     if(override || !exists) {
       writeFile(fileFullPath, new Uint8Array(body))
-      return SuccessResponse()
+      return SuccessItemsResponse()
     }
     else return AnyErrorResponse()
   } catch (err) {
