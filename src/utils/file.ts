@@ -1,21 +1,51 @@
-import { readdir } from "fs/promises";
-import fs from "fs";
+import { readdir, mkdir } from "fs/promises";
 import path from "path";
 
-export function isDir(filePath: string) {
-  return fs.statSync(filePath).isDirectory();
+import { stat, access, constants } from 'fs/promises';
+
+export async function isDir(filePath: string): Promise<boolean> {
+  try {
+    const stats = await stat(filePath);
+    return stats.isDirectory();
+  } catch {
+    return false;
+  }
 }
 
-export function isFile(filePath: string) {
-  return fs.statSync(filePath).isFile();
+export async function isFile(filePath: string): Promise<boolean> {
+  try {
+    const stats = await stat(filePath);
+    return stats.isFile();
+  } catch {
+    return false;
+  }
 }
 
-export function directoryExist(fullPath: string) {
-  return fs.existsSync(fullPath);
+export async function directoryExist(fullPath: string): Promise<boolean> {
+  try {
+    const stats = await stat(fullPath);
+    return stats.isDirectory();
+  } catch {
+    return false;
+  }
 }
 
-export function fileExists(fullPath: string) {
-  return fs.existsSync(fullPath);
+export async function fileExists(fullPath: string): Promise<boolean> {
+  try {
+    await access(fullPath, constants.F_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function createDir(fullPath:string) {
+  try{
+    await mkdir(fullPath)
+    return true
+  }catch{
+    return false
+  }
 }
 
 export async function getDirStruct(dirPath: string) {

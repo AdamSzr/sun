@@ -1,24 +1,26 @@
-import { SuccessItemsResponse } from "@/app/responses"
+import { SuccessItemsResponse } from "@/responses"
 import { prisma } from "@/lib/prisma"
 
 export async function GET() {
   const geoCord = await prisma.geoCord.findMany()
 
-  return SuccessItemsResponse({geoCord})
+  return SuccessItemsResponse({ geoCord })
 }
 
 
-type GeoCords = {lat:number,long:number}
+type GeoCords = { lat: number, long: number }
 
 export async function POST(request: Request) {
-  const cords:GeoCords = await request.json()
+  const cords: GeoCords = await request.json()
 
-  await prisma.geoCord.create({data: {
-    ...cords,
-    path:{
-     connect: { id:1 }
+  await prisma.geoCord.create({
+    data: {
+      ...cords,
+      path: {
+        connect: { id: 1 }
+      }
     }
-  }})
+  })
 
   return SuccessItemsResponse(cords)
 }

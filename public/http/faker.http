@@ -1,0 +1,6 @@
+POST http://localhost:3000/api/faker?count=500
+
+{
+  "title": "book.title",
+  "autor": "book.genre"
+}

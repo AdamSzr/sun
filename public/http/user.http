@@ -1,2 +1,7 @@
 GET  http://localhost:3000/api/users
-Cookie: sessionId=cmffzxvhi0005vl28wvnmpgmd
+
+###
+DELETE   http://localhost:3000/api/users
+
+###
+POST   http://localhost:3000/api/users

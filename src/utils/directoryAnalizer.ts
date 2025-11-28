@@ -14,7 +14,7 @@ function produceDiskObject(dir: string, item: string) {
   return z;
 }
 
-export async function directoryAnalizer(baseDrivePath:string, requestPath:string) {
+export async function directoryAnalizer(baseDrivePath: string, requestPath: string) {
   const baseDir = baseDrivePath + requestPath
   const innerObjects = await getDirStruct(baseDir)
   const z = {} as DirectoryInfo;

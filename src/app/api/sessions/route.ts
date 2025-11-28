@@ -1,5 +1,5 @@
-import { SuccessItemsResponse } from "@/app/responses";
-import { sessionManager } from "@/app/services/SessionManager";
+import { SuccessItemsResponse } from "@/responses";
+import { sessionManager } from "@/services/SessionManager";
 
 export async function GET() {
   return sessionManager.getAll().then(it => SuccessItemsResponse(it))

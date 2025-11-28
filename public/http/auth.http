@@ -8,7 +8,7 @@ POST http://localhost:3000/api/user
 
 ###
 
-POST http://localhost:3000/api/auth
+POST http://localhost:3000/api/auth/login
 
 {
   "name":"adam",

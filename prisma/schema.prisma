@@ -14,55 +14,55 @@ datasource db {
 }
 
 model User {
-  id       Int @id @default(autoincrement())
-  name     String
-  password String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  geoPath  GeoPath[]
-  todo     TodoItem[]
-  session  Session?
+  id        Int        @id @default(autoincrement())
+  name      String
+  password  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  geoPath   GeoPath[]
+  todo      TodoItem[]
+  session   Session?
 }
 
 // ------------------------- TODO -------------------------
 
 model TodoItem {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   description String
-  user        User @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
-  done        Boolean @default(false)
+  done        Boolean  @default(false)
 }
 
 // ------------------------- GEO PATHS -------------------------
 
 model GeoPath {
-  id          Int     @id @default(autoincrement())
-  name        String
-  cords       GeoCord[]
-  user        User @relation(fields: [userId], references: [id])
-  userId      Int
+  id     Int       @id @default(autoincrement())
+  name   String
+  cords  GeoCord[]
+  user   User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
 }
 
 model GeoCord {
-  id          Int     @id @default(autoincrement())
-  long        Float
-  lat         Float
-  path        GeoPath @relation(fields: [pathId], references: [id])
-  pathId      Int
+  id     Int     @id @default(autoincrement())
+  long   Float
+  lat    Float
+  path   GeoPath @relation(fields: [pathId], references: [id], onDelete: Cascade)
+  pathId Int
 }
 
 model Session {
-  id         String   @id @default(cuid()) // lub uuid() jeśli wolisz
-  userId     Int      @unique
-  data       Json?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  expiresAt  DateTime
+  id        String   @id @default(cuid()) // lub uuid() jeśli wolisz
+  userId    Int      @unique
+  data      Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expiresAt DateTime
 
   // opcjonalnie: relacja do modelu User, jeśli masz taki model
-  user       User     @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -1,0 +1,15 @@
+POST http://localhost:3000/api/validator/equals
+
+{
+  "text": "abc123",
+  "args":[
+    "abc123"
+  ]
+}
+
+###
+OPTIONS http://localhost:3000/api/validator
+
+
+###
+OPTIONS http://localhost:3000/api/validator/isAfter

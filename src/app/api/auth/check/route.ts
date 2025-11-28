@@ -1,7 +1,7 @@
-import { withAuth } from "@/app/features/auth";
-import { SuccessItemsResponse } from "@/app/responses";
+import { withAuth } from "@/auth";
+import { SuccessItemsResponse } from "@/responses";
 
 
 export async function GET() {
-  return withAuth(({session}) =>SuccessItemsResponse(session))
+  return withAuth(({ session }) => SuccessItemsResponse(session))
 }
