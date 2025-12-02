@@ -1,8 +1,8 @@
 // lib/geo-cord-manager.ts
-import { GeoCord } from '@prisma/client'
+import { GeoCord } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 
-export type GeoCordsPayload = Pick< GeoCord, 'pathId'|'lat'|'long' >
+export type GeoCordsPayload = Pick< GeoCord, 'pathId'|'lat'|'long' >;
 
 
 

@@ -8,13 +8,13 @@ import { revalidatePath } from "next/cache";
 export async function saveFileAction(formData: FormData) {
   // const file = formData.get('file') as File | null;
 
-  const file: FormDataEntryValue[] | null = formData.getAll('file')
-  if(!file || file.length === 0) return
-  const validatedFiles= file.filter( it => typeof it !== 'string' && it.size > 0) as File[]
+  const file: FormDataEntryValue[] | null = formData.getAll('file');
+  if(!file || file.length === 0) return;
+  const validatedFiles= file.filter( it => typeof it !== 'string' && it.size > 0) as File[];
 
-  const success = await Promise.all(validatedFiles.map( file => driveManager.saveFile( formatDate(dirDateFormat), file )))
+  const success = await Promise.all(validatedFiles.map( file => driveManager.saveFile( formatDate(dirDateFormat), file )));
 
-  if(success) revalidatePath('/drive')
+  if(success) revalidatePath('/drive');
   // return {successes}
   // if (!file) {
   //   throw new Error('Brak pliku');
@@ -39,10 +39,10 @@ export async function saveFileAction(formData: FormData) {
 }
 
 export async function createDirectory(formData: FormData) {
-  const dirName: FormDataEntryValue[] | null = formData.getAll('dirName')
-  const acctualPath: FormDataEntryValue[] | null = formData.getAll('acctualPath')
+  const dirName: FormDataEntryValue[] | null = formData.getAll('dirName');
+  const acctualPath: FormDataEntryValue[] | null = formData.getAll('acctualPath');
 
-  const success = await driveManager.mkdir(`${acctualPath}/${dirName}`)
+  const success = await driveManager.mkdir(`${acctualPath}/${dirName}`);
 
-  if(success) revalidatePath('/drive')
+  if(success) revalidatePath('/drive');
 }

@@ -41,10 +41,10 @@ export async function fileExists(fullPath: string): Promise<boolean> {
 
 export async function createDir(fullPath:string) {
   try{
-    await mkdir(fullPath)
-    return true
+    await mkdir(fullPath);
+    return true;
   }catch{
-    return false
+    return false;
   }
 }
 
@@ -65,8 +65,8 @@ export async function tryFindItemInDir(directory: string, itemName: string) {
  * @returns if `requestedItem` is undefined then directory does not contain item, otherwise `requestedItem` is a correct item name with extension
  */
 export async function getObjectInfo(directory: string, itemName: string) {
-  const { requestedItem, itemsInDir } = await tryFindItemInDir(directory, itemName)
-  const fullPath = path.join(directory, requestedItem ?? '')
+  const { requestedItem, itemsInDir } = await tryFindItemInDir(directory, itemName);
+  const fullPath = path.join(directory, requestedItem ?? '');
 
-  return { fullPath, requestedItem, itemsInDir }
+  return { fullPath, requestedItem, itemsInDir };
 }

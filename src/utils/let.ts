@@ -17,7 +17,7 @@ Number.prototype.plus = function (val: number): number {
 };
 
 Number.prototype.range = function (): number[] {
-    return Array.from({ length: this.valueOf() }, (_, i) => i);
+  return Array.from({ length: this.valueOf() }, (_, i) => i);
 };
 
 

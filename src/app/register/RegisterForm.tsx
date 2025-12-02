@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import React, { useActionState } from 'react'
-import { register } from './actions'
+import React, { useActionState } from 'react';
+import { register } from './actions';
 
 export default function RegisterForm() {
-  const [state, action, pending] = useActionState(register, { success:null })
+  const [state, action, pending] = useActionState(register, { success:null });
 
   return (
     <form action={action}>
@@ -12,5 +12,5 @@ export default function RegisterForm() {
       <input type="text" name="password" />
       <button type="submit">register</button>
     </form>
-  )
+  );
 }

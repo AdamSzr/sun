@@ -1,2 +1,2 @@
 
-export const ENABLE_FILE_DOWNLOAD = true
+export const ENABLE_FILE_DOWNLOAD = true;

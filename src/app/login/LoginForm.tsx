@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import React, { useActionState } from 'react'
-import { login } from './actions'
+import React, { useActionState } from 'react';
+import { login } from './actions';
 
 export default function LoginForm() {
-  const [state, action, pending] = useActionState(login, { success:null })
+  const [state, action, pending] = useActionState(login, { success:null });
 
   return (
     <form action={action}>
@@ -12,5 +12,5 @@ export default function LoginForm() {
       <input type="text" name="password" />
       <button type="submit">login</button>
     </form>
-  )
+  );
 }

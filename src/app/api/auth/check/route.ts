@@ -3,5 +3,5 @@ import { SuccessItemsResponse } from "@/responses";
 
 
 export async function GET() {
-  return withAuth(({ session }) => SuccessItemsResponse(session))
+  return withAuth(({ session }) => SuccessItemsResponse(session));
 }

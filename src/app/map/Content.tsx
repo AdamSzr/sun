@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { GeoCord, GeoPath } from '@prisma/client'
-import { LatLngTuple } from 'leaflet'
-import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
-import L from 'leaflet'
+import { GeoCord, GeoPath } from '@prisma/client';
+import { LatLngTuple } from 'leaflet';
+import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
+import L from 'leaflet';
 
 type PathMap = {
   path:GeoPath,
   cords:GeoCord[]
-}
+};
 
-const position: LatLngTuple = [52.2297, 21.0122]
+const position: LatLngTuple = [52.2297, 21.0122];
 
 // Ikona pinezki 20x30
 const customIcon = L.icon({
@@ -18,7 +18,7 @@ const customIcon = L.icon({
   iconSize: [20, 30],  // szerokość x wysokość
   iconAnchor: [10, 30], // punkt zakotwiczenia (środek dołu ikony)
   popupAnchor: [0, -30] // gdzie pojawia się popup względem ikony
-})
+});
 
 
 export const tatraTrail = [
@@ -40,5 +40,5 @@ export default function Content({cords,path}:PathMap) {
         <Polyline positions={tatraTrail} color="red" />
       </MapContainer>
     </div>
-  )
+  );
 }

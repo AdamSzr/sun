@@ -5,38 +5,38 @@ import { User } from '@prisma/client';
 import { hash } from 'crypto';
 
 
-export type UserPayload = Omit<User, 'createdAt' | 'updatedAt' | 'id'>
+export type UserPayload = Omit<User, 'createdAt' | 'updatedAt' | 'id'>;
 
 export class UserManager {
 
   create({ name, password: rawPassword }: UserPayload) {
-    const password = this.#createHash(rawPassword)
-    return prisma.user.create({ data: { name, password } })
+    const password = this.#createHash(rawPassword);
+    return prisma.user.create({ data: { name, password } });
   }
 
   checkNameAvailable(name: string) {
-    return prisma.user.count({ where: { name } }).then(it => it === 0)
+    return prisma.user.count({ where: { name } }).then(it => it === 0);
   }
 
   findUser(name: string, rawPassword: string) {
-    const password = this.#createHash(rawPassword)
-    return prisma.user.findFirst({ where: { name, AND: { password } } })
+    const password = this.#createHash(rawPassword);
+    return prisma.user.findFirst({ where: { name, AND: { password } } });
   }
 
   getAll() {
-    return prisma.user.findMany()
+    return prisma.user.findMany();
   }
 
   deleteAll() {
-    return prisma.user.deleteMany()
+    return prisma.user.deleteMany();
   }
 
   delete(id: number) {
-    return prisma.user.delete({ where: { id } })
+    return prisma.user.delete({ where: { id } });
   }
 
   #createHash(text: string) {
-    return hash('sha256', text)
+    return hash('sha256', text);
   }
 
 }

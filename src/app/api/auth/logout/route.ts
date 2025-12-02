@@ -5,9 +5,9 @@ import { cookies } from "next/headers";
 
 export async function POST() {
   return withAuth(async ({ session }) => {
-    await sessionManager.deleteSession(session.id)
+    await sessionManager.deleteSession(session.id);
 
-    const c = await cookies()
+    const c = await cookies();
     c.set({
       name: AUTH_COOKIE_KEY,
       value: '',
@@ -15,8 +15,8 @@ export async function POST() {
       path: '/',
       secure: true,
       maxAge: 0,
-    })
+    });
 
-    return SuccessItemsResponse()
-  })
+    return SuccessItemsResponse();
+  });
 }

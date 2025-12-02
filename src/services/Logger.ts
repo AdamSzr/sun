@@ -1,18 +1,18 @@
-import { formatDate } from '@/utils/utils'
-import React from 'react'
+import { formatDate } from '@/utils/utils';
+import React from 'react';
 
 export class Logger{
 
- constructor() {}
+  constructor() {}
 
- log(text: string){
-  console.log(text)
- }
+  log(text: string){
+    console.log(text);
+  }
 }
 
 
-export const logger = new Logger()
+export const logger = new Logger();
 
-export const log = (text:string) => logger.log(`[${formatDate('DD.MM.YYYY hh:mm:ss')}]` + text)
+export const log = (text:string) => logger.log(`[${formatDate('DD.MM.YYYY hh:mm:ss')}]` + text);
 
-export default Logger
+export default Logger;

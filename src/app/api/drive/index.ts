@@ -5,8 +5,8 @@ import { readFile, rm, writeFile } from 'fs/promises';
 import { type NextRequest } from 'next/server';
 import path from 'path';
 
-export const dirDateFormat = `DD-MM-YYYY`
-export const driveLogger = (t:string) =>  log( ` Drive: `+t )
+export const dirDateFormat = `DD-MM-YYYY`;
+export const driveLogger = (t:string) =>  log( ` Drive: `+t );
 
 // export async function GET(request: NextRequest) {
 //   const requestPath = request.nextUrl.searchParams.get('path')
