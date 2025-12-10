@@ -1,9 +1,9 @@
-import validator from 'validator';
+import validator from 'validator'
 
 
-export async function OPTIONS(request:Request) {
+export async function OPTIONS( request:Request ) {
   return Response.json({
     result: true,
-    functions: Object.keys(validator)
-  });
+    functions: Object.keys( validator ),
+  })
 }

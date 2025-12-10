@@ -1,12 +1,7 @@
-import { AnyErrorResponse, ApiErrorResponse, SuccessItemsResponse } from '@/responses';
-import { log } from '@/services/Logger';
-import { directoryExist, fileExists } from '@/utils/file';
-import { readFile, rm, writeFile } from 'fs/promises';
-import { type NextRequest } from 'next/server';
-import path from 'path';
+import { log } from '@/services/Logger'
 
-export const dirDateFormat = `DD-MM-YYYY`;
-export const driveLogger = (t:string) =>  log( ` Drive: `+t );
+export const dirDateFormat = `YYYY-MM-DD`
+export const driveLogger = (t:string) =>  log( ` Drive: ` + t )
 
 // export async function GET(request: NextRequest) {
 //   const requestPath = request.nextUrl.searchParams.get('path')

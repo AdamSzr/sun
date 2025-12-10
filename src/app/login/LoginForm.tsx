@@ -1,16 +1,49 @@
-"use client";
+"use client"
 
-import React, { useActionState } from 'react';
-import { login } from './actions';
+import React, { useActionState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import Text from '@fet/theme/ui/Text'
+import { Input, Label, Button, Form, Hint, Flex } from '@fet/theme/ui'
+import { login } from './actions'
 
 export default function LoginForm() {
-  const [state, action, pending] = useActionState(login, { success:null });
+  const searchParams = useSearchParams()
+  const redirectUrl = searchParams.get( `redirectUrl` ) || `/`
+  const [ state, action, pending ] = useActionState( login, { success:null } )
+
 
   return (
-    <form action={action}>
-      <input type="text" name="name" />
-      <input type="text" name="password" />
-      <button type="submit">login</button>
-    </form>
-  );
+    <Form action={action}>
+      <Text as="h1" className="text-black text-center">Logowanie</Text>
+
+      <Input type="hidden" name="redirectUrl" value={redirectUrl} />
+
+      <Flex className="flex-col">
+        <Label htmlFor="name">
+          Nazwa użytkownika
+        </Label>
+        <Input id="name" type="text" name="name" />
+      </Flex>
+
+      <Flex className="flex-col gap-1">
+        <Label htmlFor="password">Hasło</Label>
+        <Input
+          id="password"
+          type="password"
+          name="password"
+        />
+      </Flex>
+
+
+      <Button type="submit" disabled={pending}>
+        {pending ? `Logowanie…` : `Zaloguj się`}
+      </Button>
+
+      {
+        state.success === false && (
+          <Hint variant="error">Błędne dane logowania</Hint>
+        )
+      }
+    </Form>
+  )
 }

@@ -3,13 +3,11 @@
 POST http://localhost:3000/api/memory-db?key=test2
 Content-Type: application/json
 
-{
-    "Name":2
-}
+[1,2,3]
 
 
 ###
-GET http://localhost:3000/api/memory-db?key=test3
+GET http://localhost:3000/api/memory-db?key=test2
 
 
 ###

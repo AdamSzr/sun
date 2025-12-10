@@ -1,58 +1,26 @@
-import js from "@eslint/js";
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tsparser from "@typescript-eslint/parser";
-import react from "eslint-plugin-react";
-import reactHooks from "eslint-plugin-react-hooks";
-import stylistic from "@stylistic/eslint-plugin";
+import typescriptConfig from 'eslint-config-next/typescript'
+import nextVitals from 'eslint-config-next/core-web-vitals'
+import eyeConfig from "eslint-config-eye"
 
-export default [
-  // js.configs.recommended,
-  // js.configs.browser,
-  // js.configs.node,
+import { defineConfig, globalIgnores } from 'eslint/config'
 
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...typescriptConfig,
+  ...eyeConfig,
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
-
-    languageOptions: {
-      parser: tsparser,
-      parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
-        ecmaFeatures: {
-          jsx: true,
-        },
-        project: true,
-        tsconfigRootDir: process.cwd()
-      }
+    rules:{
+      '@stylistic/key-spacing':`off`,
     },
-
-    plugins: {
-      "@typescript-eslint": tseslint,
-      react,
-      "react-hooks": reactHooks,
-      "@stylistic": stylistic,
-    },
-
-    settings: {
-      react: {
-        version: "detect",
-      },
-    },
-
-    rules: {
-
-      // TypeScript
-      "@typescript-eslint/no-unused-vars": "warn",
-
-      // React / Hooks
-      "react/jsx-uses-react": "off", // dla React 17+
-      "react/react-in-jsx-scope": "off",
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
-
-      // Stylistic
-      "@stylistic/semi": ["error", "always"],
-      "@stylistic/indent": ["error", 2]
-    }
-  }
-];
+  },
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    `.next/**`,
+    `out/**`,
+    `build/**`,
+    `next-env.d.ts`,
+  ]),
+])
+ 
+export default eslintConfig

@@ -1,4 +1,4 @@
-POST http://localhost:3000/api/faker?count=500
+POST http://localhost:3000/api/faker
 
 {
   "title": "book.title",
