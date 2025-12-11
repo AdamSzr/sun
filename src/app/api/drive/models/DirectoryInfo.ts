@@ -1,6 +1,6 @@
-import { DiskObject } from "./DiskObject";
+import { DiskObject } from "./DiskObject"
 
 export type DirectoryInfo = {
-  path:string
-  items:DiskObject[]
+  path: string
+  items: DiskObject[]
 };

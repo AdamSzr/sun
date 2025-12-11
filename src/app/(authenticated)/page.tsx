@@ -1,6 +1,6 @@
 
 import { redirect } from "next/navigation"
-import auth from "@/auth"
+import auth from "@fet/auth"
 import LogoutButton from "./LogoutButton"
 
 export default async function Home() {

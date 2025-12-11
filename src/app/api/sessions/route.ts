@@ -1,5 +1,5 @@
-import { SuccessItemsResponse } from "@/responses";
-import { sessionManager } from "@/services/SessionManager";
+import { SuccessItemsResponse } from "@fet/responses";
+import { sessionManager } from "@fet/services/SessionManager";
 
 export async function GET() {
   return sessionManager.getAll().then(it => SuccessItemsResponse(it));

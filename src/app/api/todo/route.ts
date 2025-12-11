@@ -1,4 +1,4 @@
-import { ApiErrorResponse, SuccessItemsResponse } from "@/responses";
+import { ApiErrorResponse, SuccessItemsResponse } from "@fet/responses";
 import { prisma } from "@/lib/prisma";
 import { TodoItem } from "@prisma/client";
 import { NextRequest } from "next/server";

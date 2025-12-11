@@ -3,9 +3,9 @@
 
 import { redirect } from "next/navigation"
 import { User } from "@prisma/client"
-import { registerPayloadValidator } from "@/validators/login"
-import { userManager } from "@/services/UserManager"
-import { getErrorObject, getSuccessObject } from "@/responses"
+import { registerPayloadValidator } from "@fet/validators/login"
+import { userManager } from "@fet/services/UserManager"
+import { getErrorObject, getSuccessObject } from "@fet/responses"
 
 
 type RegisterRequest = Pick<User, `name` | `password`>;

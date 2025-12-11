@@ -1,7 +1,7 @@
-import { ApiErrorResponse, SuccessItemsResponse, ValidationResponse } from "@/responses";
-import { AUTH_COOKIE_KEY, SESSION_TTL_SECONDS, sessionManager } from "@/services/SessionManager";
-import { userManager } from "@/services/UserManager";
-import { registerPayloadValidator } from "@/validators/login";
+import { ApiErrorResponse, SuccessItemsResponse, ValidationResponse } from "@fet/responses";
+import { AUTH_COOKIE_KEY, SESSION_TTL_SECONDS, sessionManager } from "@fet/services/SessionManager";
+import { userManager } from "@fet/services/UserManager";
+import { registerPayloadValidator } from "@fet/validators/login";
 import { prisma } from "@/lib/prisma";
 import { User } from "@prisma/client";
 import { cookies } from 'next/headers';

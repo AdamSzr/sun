@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server"
-import { userPayloadValidator } from "@/validators/user"
-import { userManager, UserPayload } from "@/services/UserManager"
-import { SuccessItemsResponse, SuccessResponse, ValidationResponse } from "@/responses"
-import { withAuth } from "@/auth"
+import { userPayloadValidator } from "@fet/validators/user"
+import { userManager, UserPayload } from "@fet/services/UserManager"
+import { SuccessItemsResponse, SuccessResponse, ValidationResponse } from "@fet/responses"
+import { withAuth } from "@fet/auth"
 
 export async function POST( req:NextRequest ) {
   const payload:UserPayload = await req.json()

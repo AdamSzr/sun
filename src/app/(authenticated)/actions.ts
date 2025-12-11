@@ -3,7 +3,7 @@
 
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
-import { AUTH_COOKIE_KEY, sessionManager } from '@/services/SessionManager'
+import { AUTH_COOKIE_KEY, sessionManager } from '@fet/services/SessionManager'
 
 export async function logout() {
   const c = await cookies()

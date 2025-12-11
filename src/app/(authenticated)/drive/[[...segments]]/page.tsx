@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from '@fet/theme/ui/Link'
+import { SuccessItemResponse } from '@fet/responses'
 import { dirDateFormat } from '@app/api/drive'
 import { formatDate } from '@/utils/utils'
-import { SuccessItemResponse } from '@/responses'
 import { DirectoryInfo } from '@/app/api/drive/models/DirectoryInfo'
-import { createDirectory, saveFileAction } from './actions'
+import { createDirectory } from './actions'
 import fileImg from './(assets)/file.png'
 import dirImg from './(assets)/dir.png'
 
@@ -20,7 +20,7 @@ export default async function page({ params }:DrivePageProps) {
   const subPath = props.segments?.join( `/` )
   const directory = props.segments?.at( 0 ) ?? today
 
-  console.log( today )
+  console.log({ today, subPath, directory })
 
   const loadFiles = subPath && await DriveSdk.loadDirectory( subPath ).then( it => it.success === true ? it.item : undefined )
   const baseDirFles = !props.segments ? await DriveSdk.loadDirectory().then( it => it.success === true ? it.item : undefined ) : undefined
@@ -94,7 +94,7 @@ export default async function page({ params }:DrivePageProps) {
       }
 
 
-      <form action={saveFileAction} className="mx-auto mt-6 flex w-full max-w-md flex-col gap-4 rounded-2xl bg-white p-6 shadow">
+      <form method="POST" action={`/api/drive/${subPath}`} encType="multipart/form-data" className="mx-auto mt-6 flex w-full max-w-md flex-col gap-4 rounded-2xl bg-white p-6 shadow">
         <label className="text-sm font-medium text-gray-700">Wybierz plik</label>
 
         <input

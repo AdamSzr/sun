@@ -1,5 +1,5 @@
-import { withAuth } from "@/auth";
-import { SuccessItemsResponse } from "@/responses";
+import { withAuth } from "@fet/auth";
+import { SuccessItemsResponse } from "@fet/responses";
 
 
 export async function GET() {

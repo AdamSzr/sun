@@ -4,10 +4,10 @@
 import { redirect } from "next/navigation"
 import { cookies } from "next/headers"
 import { User } from "@prisma/client"
-import { registerPayloadValidator } from "@/validators/login"
-import { userManager } from "@/services/UserManager"
-import { AUTH_COOKIE_KEY, SESSION_TTL_SECONDS, sessionManager } from "@/services/SessionManager"
-import { ApiErrorResponse, getErrorObject, getSuccessObject, ValidationResponse } from "@/responses"
+import { registerPayloadValidator } from "@fet/validators/login"
+import { userManager } from "@fet/services/UserManager"
+import { AUTH_COOKIE_KEY, SESSION_TTL_SECONDS, sessionManager } from "@fet/services/SessionManager"
+import { ApiErrorResponse, getErrorObject, getSuccessObject, ValidationResponse } from "@fet/responses"
 
 
 type UserLoginRequest = Pick<User, `name` | `password`>;

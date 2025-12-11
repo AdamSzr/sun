@@ -1,6 +1,6 @@
-import { withAuth } from "@/auth";
-import { SuccessItemsResponse } from "@/responses";
-import { AUTH_COOKIE_KEY, sessionManager } from "@/services/SessionManager";
+import { withAuth } from "@fet/auth";
+import { SuccessItemsResponse } from "@fet/responses";
+import { AUTH_COOKIE_KEY, sessionManager } from "@fet/services/SessionManager";
 import { cookies } from "next/headers";
 
 export async function POST() {

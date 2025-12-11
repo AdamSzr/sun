@@ -1,5 +1,5 @@
 import { type NextRequest } from 'next/server'
-import { ApiErrorResponse, SuccessResponse } from '@/responses'
+import { ApiErrorResponse, SuccessResponse } from '@fet/responses'
 
 const memoryDb = new Map()
 

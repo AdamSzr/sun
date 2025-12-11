@@ -1,4 +1,4 @@
-import { SuccessItemsResponse } from "@/responses"
+import { SuccessItemsResponse } from "@fet/responses"
 import { prisma } from "@/lib/prisma"
 
 export async function GET() {
