@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
-import dynamic from 'next/dynamic';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react'
+import dynamic from 'next/dynamic'
 
 export default function GeoApp() {
-  const [line,setLine] = useState();
+  const [ line, setLine ] = useState()
 
   // useEffect(() =>{
   //   fetch('/api/geo-cords')
@@ -27,23 +27,23 @@ export default function GeoApp() {
     { lat: 54.1040, long: 18.6312 },
     { lat: 54.1610, long: 18.6785 },
     { lat: 54.2194, long: 18.7000 }, // Przedmieścia Gdańska
-    { lat: 54.3520, long: 18.6466 }  // Gdańsk - centrum
-  ];
+    { lat: 54.3520, long: 18.6466 },  // Gdańsk - centrum
+  ]
 
   // Zamiana `long` na `lng` (Leaflet wymaga `lat, lng`)
-  const polylineCoords = routeCoordinates.map(({ lat, long }) => [lat, long]);
+  const polylineCoords = routeCoordinates.map( ({ lat, long }) => [ lat, long ] )
 
-  const Map = useMemo(() => dynamic(
-    () => import('./Map'),
+  const Map = useMemo( () => dynamic(
+    () => import(`./Map`),
     { 
       loading: () => <p>A map is loading</p>,
-      ssr: false
-    }
-  ), []);
+      ssr: false,
+    },
+  ), [] )
 
-  console.log(line);
+  console.log( line )
 
-  return <div style={{ aspectRatio: `1 / 1` }}>
+  return (<div style={{ aspectRatio: `1 / 1` }}>
     {/* {polylineCoords && <Map line={polylineCoords} />} */}
-  </div>;
+  </div>)
 }

@@ -37,3 +37,4 @@ export async function withAuth( perform:LetFunction | Promise<LetFunction> ) {
   else
     return perform.then( v => v( authResult ) )
 }
+

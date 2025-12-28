@@ -1,14 +1,13 @@
 import Image from 'next/image'
 import Link from '@fet/theme/ui/Link'
 import { SuccessItemResponse } from '@fet/responses'
-import { dirDateFormat } from '@app/api/drive'
 import { formatDate } from '@/utils/utils'
 import { DirectoryInfo } from '@/app/api/drive/models/DirectoryInfo'
 import { createDirectory } from './actions'
 import fileImg from './(assets)/file.png'
 import dirImg from './(assets)/dir.png'
 
-const today = formatDate( dirDateFormat )
+const today = formatDate( `DD-YY-MM` )
 
 export type PageProps<T> = { params: Promise<T> };
 
@@ -20,7 +19,6 @@ export default async function page({ params }:DrivePageProps) {
   const subPath = props.segments?.join( `/` )
   const directory = props.segments?.at( 0 ) ?? today
 
-  console.log({ today, subPath, directory })
 
   const loadFiles = subPath && await DriveSdk.loadDirectory( subPath ).then( it => it.success === true ? it.item : undefined )
   const baseDirFles = !props.segments ? await DriveSdk.loadDirectory().then( it => it.success === true ? it.item : undefined ) : undefined

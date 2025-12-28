@@ -22,7 +22,7 @@
       "@lib/*": [ "./src/lib/*" ],
       "@fet/*": [ "./src/features/*" ],
       "@app/*": [ "./src/app/*" ],
-      "@/*": [ "./src/*" ]
+      "@/*": [ "./src/*" ],
     }
   },
   "include": ["video.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

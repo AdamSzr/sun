@@ -20,8 +20,9 @@ export default async function RootLayout({ children }:Readonly<{ children: React
   const headersList = await headers()
   const currentPath = headersList.get( `x-invoke-path` )
 
-  // const isAuth = await auth()
-  // if (!isAuth) redirect( `/login?redirectUrl=${currentPath}` )
+  const isAuth = await auth()
+  console.log( isAuth?.session )
+  if (!isAuth) redirect( `/login?redirectUrl=${currentPath}` )
 
   return (
     <>

@@ -1,12 +1,12 @@
 import path from 'path'
 import { mkdir } from 'fs/promises'
-import fs, { promises as fsPromises } from "fs"
-import { SuccessItemsResponse } from '@fet/responses'
+import { promises as fsPromises } from "fs"
+import { Logger } from '@fet/Logger'
 import { directoryExist, fileExists, getDirStruct, isFile } from '@/utils/file'
 import { DiskObject } from "@/app/api/drive/models/DiskObject"
 import { DirectoryInfo } from "@/app/api/drive/models/DirectoryInfo"
-import { driveLogger } from '@/app/api/drive'
 
+const driveLogger = new Logger({ logToConsole:true, minLevel:`debug` })
 
 export default class DriveManager {
   publicDirAbs: string
@@ -22,7 +22,7 @@ export default class DriveManager {
   async check( relPath:string ) {
     const p = path.join( this.rootDrivePath, relPath )
 
-    driveLogger( `[Checking path] ${p}` )
+    driveLogger.info( `[Checking path] ${p}` )
     const exists = await fileExists( p )
 
     if (!exists) return undefined
@@ -35,7 +35,7 @@ export default class DriveManager {
 
     return this.check( relPath ).then( diskObj => {
       if (diskObj) {
-        driveLogger( `[Mkdir error] Exists "${diskObj.type}" with same path ` )
+        driveLogger.error( `Mkdir - Exists "${diskObj.type}" with same path ` )
         return false
       }
 
@@ -52,7 +52,7 @@ export default class DriveManager {
         else return
       } )
       .catch( error => {
-        driveLogger( `[Mkdir error] ${error[ `message` ]}` )
+        driveLogger.error( `Mkdir ${error[ `message` ]}` )
         return undefined
       } )
   }
@@ -72,7 +72,7 @@ export default class DriveManager {
   scanDir( relPath:string ) {
     const p = path.join( this.rootDrivePath, relPath )
 
-    driveLogger( `[Scan dir] ${p}` )
+    driveLogger.info( `Scan - ${p}` )
 
     return this.#directoryAnalizer( p )
   }
@@ -99,7 +99,7 @@ export default class DriveManager {
       await fsPromises.writeFile( p, buffer )
       return true
     } catch (err) {
-      console.error( `Błąd zapisu pliku:`, err )
+      driveLogger.error( `Błąd zapisu pliku:`, err )
       return false
     }
   }

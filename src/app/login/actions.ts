@@ -43,7 +43,7 @@ export async function login( prev:LoginResponse, formData:FormData ): Promise<Lo
     value: session.id,
     httpOnly: true,
     path: `/`,
-    secure: true,
+    secure: false, // TODO: Remember to set 'secure:true'
     maxAge: SESSION_TTL_SECONDS,
   })
 
