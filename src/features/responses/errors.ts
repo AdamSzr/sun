@@ -29,4 +29,7 @@ export const apiErrors = {
   30000:`No item to delete`,
   30001:`No Key provided`,
   30002:`No item under specyfied key`,
+
+  // MARKET
+  40000: `Specified "target" not supported`,
 } as const
