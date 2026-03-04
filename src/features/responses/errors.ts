@@ -23,6 +23,7 @@ export const apiErrors = {
   10006: `Cannot create directory`,
   10007: `Some elements in form['file'] are not a instance of File`,
   10008: `No elements in form['file']`,
+  10009: `Failed while creating file`,
   // TODO-APP
   20000:`No id specyfied`,
   // REDIS
