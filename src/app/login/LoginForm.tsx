@@ -3,7 +3,7 @@
 import React, { useActionState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Text from '@fet/theme/ui/Text'
-import { Input, Label, Button, Form, Hint, Flex } from '@fet/theme/ui'
+import { Input, Label, Button, Form, Hint, Flex, Link } from '@fet/theme/ui'
 import { login } from './actions'
 
 export default function LoginForm() {
@@ -14,8 +14,8 @@ export default function LoginForm() {
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#050505]">
       {/* Decorative Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-600/20 rounded-full blur-[120px] animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] animate-pulse delay-700" />
+      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] animate-pulse" />
+      <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] animate-pulse delay-700" />
 
       <Form
         action={action}
@@ -81,9 +81,9 @@ export default function LoginForm() {
           disabled={pending}
           className="
             h-12 mt-2 rounded-xl text-md font-semibold
-            bg-gradient-to-r from-orange-500 to-orange-600
-            hover:from-orange-600 hover:to-orange-700
-            shadow-[0_10px_20px_-5px_rgba(234,88,12,0.5)]
+            bg-gradient-to-r from-blue-500 to-blue-600
+            hover:from-blue-600 hover:to-blue-700
+            shadow-[0_10px_20px_-5px_rgba(37,99,235,0.4)]
             active:scale-[0.98] transition-all
             flex items-center justify-center gap-2
           "
@@ -99,8 +99,8 @@ export default function LoginForm() {
         </Button>
 
         {state.success === false && (
-          <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 animate-in slide-in-from-top-1 duration-300">
-            <Hint variant="error" className="text-red-400 text-sm text-center">
+          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 animate-in slide-in-from-top-1 duration-300">
+            <Hint variant="error" className="text-rose-400 text-sm text-center">
               Nieprawidłowa nazwa użytkownika lub hasło
             </Hint>
           </div>
@@ -108,7 +108,7 @@ export default function LoginForm() {
 
         <div className="text-center">
           <Text as="p" className="text-gray-500 text-xs">
-            Nie masz konta? <span className="text-orange-400 cursor-pointer hover:underline">Zarejestruj się</span>
+            Nie masz konta? <Link href="/register" className="text-blue-400 hover:underline">Zarejestruj się</Link>
           </Text>
         </div>
       </Form>
