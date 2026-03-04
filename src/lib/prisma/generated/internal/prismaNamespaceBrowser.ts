@@ -55,7 +55,13 @@ export const ModelName = {
   TodoItem: 'TodoItem',
   GeoPath: 'GeoPath',
   GeoCord: 'GeoCord',
-  Session: 'Session'
+  Session: 'Session',
+  Spotlight: 'Spotlight',
+  SpotlightCategory: 'SpotlightCategory',
+  SpotlightMedia: 'SpotlightMedia',
+  SpotlightComment: 'SpotlightComment',
+  SpotlightMediaComment: 'SpotlightMediaComment',
+  SpotlightRate: 'SpotlightRate'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -127,6 +133,91 @@ export const SessionScalarFieldEnum = {
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const SpotlightScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  userId: 'userId',
+  lat: 'lat',
+  lng: 'lng',
+  isActive: 'isActive',
+  visibility: 'visibility',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SpotlightScalarFieldEnum = (typeof SpotlightScalarFieldEnum)[keyof typeof SpotlightScalarFieldEnum]
+
+
+export const SpotlightCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  iconUrl: 'iconUrl',
+  coverImage: 'coverImage',
+  isActive: 'isActive',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SpotlightCategoryScalarFieldEnum = (typeof SpotlightCategoryScalarFieldEnum)[keyof typeof SpotlightCategoryScalarFieldEnum]
+
+
+export const SpotlightMediaScalarFieldEnum = {
+  id: 'id',
+  spotlightId: 'spotlightId',
+  title: 'title',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  src: 'src',
+  userId: 'userId'
+} as const
+
+export type SpotlightMediaScalarFieldEnum = (typeof SpotlightMediaScalarFieldEnum)[keyof typeof SpotlightMediaScalarFieldEnum]
+
+
+export const SpotlightCommentScalarFieldEnum = {
+  id: 'id',
+  spotlightId: 'spotlightId',
+  content: 'content',
+  isActive: 'isActive',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SpotlightCommentScalarFieldEnum = (typeof SpotlightCommentScalarFieldEnum)[keyof typeof SpotlightCommentScalarFieldEnum]
+
+
+export const SpotlightMediaCommentScalarFieldEnum = {
+  id: 'id',
+  spotlightId: 'spotlightId',
+  mediaId: 'mediaId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  content: 'content',
+  userId: 'userId'
+} as const
+
+export type SpotlightMediaCommentScalarFieldEnum = (typeof SpotlightMediaCommentScalarFieldEnum)[keyof typeof SpotlightMediaCommentScalarFieldEnum]
+
+
+export const SpotlightRateScalarFieldEnum = {
+  id: 'id',
+  spotlightId: 'spotlightId',
+  value: 'value',
+  userId: 'userId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SpotlightRateScalarFieldEnum = (typeof SpotlightRateScalarFieldEnum)[keyof typeof SpotlightRateScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -388,7 +388,13 @@ export const ModelName = {
   TodoItem: 'TodoItem',
   GeoPath: 'GeoPath',
   GeoCord: 'GeoCord',
-  Session: 'Session'
+  Session: 'Session',
+  Spotlight: 'Spotlight',
+  SpotlightCategory: 'SpotlightCategory',
+  SpotlightMedia: 'SpotlightMedia',
+  SpotlightComment: 'SpotlightComment',
+  SpotlightMediaComment: 'SpotlightMediaComment',
+  SpotlightRate: 'SpotlightRate'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "todoItem" | "geoPath" | "geoCord" | "session"
+    modelProps: "user" | "todoItem" | "geoPath" | "geoCord" | "session" | "spotlight" | "spotlightCategory" | "spotlightMedia" | "spotlightComment" | "spotlightMediaComment" | "spotlightRate"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +784,450 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Spotlight: {
+      payload: Prisma.$SpotlightPayload<ExtArgs>
+      fields: Prisma.SpotlightFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SpotlightFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SpotlightFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightPayload>
+        }
+        findFirst: {
+          args: Prisma.SpotlightFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SpotlightFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightPayload>
+        }
+        findMany: {
+          args: Prisma.SpotlightFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightPayload>[]
+        }
+        create: {
+          args: Prisma.SpotlightCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightPayload>
+        }
+        createMany: {
+          args: Prisma.SpotlightCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SpotlightCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightPayload>[]
+        }
+        delete: {
+          args: Prisma.SpotlightDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightPayload>
+        }
+        update: {
+          args: Prisma.SpotlightUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightPayload>
+        }
+        deleteMany: {
+          args: Prisma.SpotlightDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SpotlightUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SpotlightUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightPayload>[]
+        }
+        upsert: {
+          args: Prisma.SpotlightUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightPayload>
+        }
+        aggregate: {
+          args: Prisma.SpotlightAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSpotlight>
+        }
+        groupBy: {
+          args: Prisma.SpotlightGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SpotlightCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightCountAggregateOutputType> | number
+        }
+      }
+    }
+    SpotlightCategory: {
+      payload: Prisma.$SpotlightCategoryPayload<ExtArgs>
+      fields: Prisma.SpotlightCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SpotlightCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SpotlightCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.SpotlightCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SpotlightCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.SpotlightCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.SpotlightCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.SpotlightCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SpotlightCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.SpotlightCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCategoryPayload>
+        }
+        update: {
+          args: Prisma.SpotlightCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.SpotlightCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SpotlightCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SpotlightCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.SpotlightCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.SpotlightCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSpotlightCategory>
+        }
+        groupBy: {
+          args: Prisma.SpotlightCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SpotlightCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightCategoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    SpotlightMedia: {
+      payload: Prisma.$SpotlightMediaPayload<ExtArgs>
+      fields: Prisma.SpotlightMediaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SpotlightMediaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SpotlightMediaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaPayload>
+        }
+        findFirst: {
+          args: Prisma.SpotlightMediaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SpotlightMediaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaPayload>
+        }
+        findMany: {
+          args: Prisma.SpotlightMediaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaPayload>[]
+        }
+        create: {
+          args: Prisma.SpotlightMediaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaPayload>
+        }
+        createMany: {
+          args: Prisma.SpotlightMediaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SpotlightMediaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaPayload>[]
+        }
+        delete: {
+          args: Prisma.SpotlightMediaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaPayload>
+        }
+        update: {
+          args: Prisma.SpotlightMediaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaPayload>
+        }
+        deleteMany: {
+          args: Prisma.SpotlightMediaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SpotlightMediaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SpotlightMediaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaPayload>[]
+        }
+        upsert: {
+          args: Prisma.SpotlightMediaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaPayload>
+        }
+        aggregate: {
+          args: Prisma.SpotlightMediaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSpotlightMedia>
+        }
+        groupBy: {
+          args: Prisma.SpotlightMediaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightMediaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SpotlightMediaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightMediaCountAggregateOutputType> | number
+        }
+      }
+    }
+    SpotlightComment: {
+      payload: Prisma.$SpotlightCommentPayload<ExtArgs>
+      fields: Prisma.SpotlightCommentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SpotlightCommentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCommentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SpotlightCommentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCommentPayload>
+        }
+        findFirst: {
+          args: Prisma.SpotlightCommentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCommentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SpotlightCommentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCommentPayload>
+        }
+        findMany: {
+          args: Prisma.SpotlightCommentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCommentPayload>[]
+        }
+        create: {
+          args: Prisma.SpotlightCommentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCommentPayload>
+        }
+        createMany: {
+          args: Prisma.SpotlightCommentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SpotlightCommentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCommentPayload>[]
+        }
+        delete: {
+          args: Prisma.SpotlightCommentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCommentPayload>
+        }
+        update: {
+          args: Prisma.SpotlightCommentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCommentPayload>
+        }
+        deleteMany: {
+          args: Prisma.SpotlightCommentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SpotlightCommentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SpotlightCommentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCommentPayload>[]
+        }
+        upsert: {
+          args: Prisma.SpotlightCommentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightCommentPayload>
+        }
+        aggregate: {
+          args: Prisma.SpotlightCommentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSpotlightComment>
+        }
+        groupBy: {
+          args: Prisma.SpotlightCommentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightCommentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SpotlightCommentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightCommentCountAggregateOutputType> | number
+        }
+      }
+    }
+    SpotlightMediaComment: {
+      payload: Prisma.$SpotlightMediaCommentPayload<ExtArgs>
+      fields: Prisma.SpotlightMediaCommentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SpotlightMediaCommentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaCommentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SpotlightMediaCommentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaCommentPayload>
+        }
+        findFirst: {
+          args: Prisma.SpotlightMediaCommentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaCommentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SpotlightMediaCommentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaCommentPayload>
+        }
+        findMany: {
+          args: Prisma.SpotlightMediaCommentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaCommentPayload>[]
+        }
+        create: {
+          args: Prisma.SpotlightMediaCommentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaCommentPayload>
+        }
+        createMany: {
+          args: Prisma.SpotlightMediaCommentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SpotlightMediaCommentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaCommentPayload>[]
+        }
+        delete: {
+          args: Prisma.SpotlightMediaCommentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaCommentPayload>
+        }
+        update: {
+          args: Prisma.SpotlightMediaCommentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaCommentPayload>
+        }
+        deleteMany: {
+          args: Prisma.SpotlightMediaCommentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SpotlightMediaCommentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SpotlightMediaCommentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaCommentPayload>[]
+        }
+        upsert: {
+          args: Prisma.SpotlightMediaCommentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightMediaCommentPayload>
+        }
+        aggregate: {
+          args: Prisma.SpotlightMediaCommentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSpotlightMediaComment>
+        }
+        groupBy: {
+          args: Prisma.SpotlightMediaCommentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightMediaCommentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SpotlightMediaCommentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightMediaCommentCountAggregateOutputType> | number
+        }
+      }
+    }
+    SpotlightRate: {
+      payload: Prisma.$SpotlightRatePayload<ExtArgs>
+      fields: Prisma.SpotlightRateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SpotlightRateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightRatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SpotlightRateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightRatePayload>
+        }
+        findFirst: {
+          args: Prisma.SpotlightRateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightRatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SpotlightRateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightRatePayload>
+        }
+        findMany: {
+          args: Prisma.SpotlightRateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightRatePayload>[]
+        }
+        create: {
+          args: Prisma.SpotlightRateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightRatePayload>
+        }
+        createMany: {
+          args: Prisma.SpotlightRateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SpotlightRateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightRatePayload>[]
+        }
+        delete: {
+          args: Prisma.SpotlightRateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightRatePayload>
+        }
+        update: {
+          args: Prisma.SpotlightRateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightRatePayload>
+        }
+        deleteMany: {
+          args: Prisma.SpotlightRateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SpotlightRateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SpotlightRateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightRatePayload>[]
+        }
+        upsert: {
+          args: Prisma.SpotlightRateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SpotlightRatePayload>
+        }
+        aggregate: {
+          args: Prisma.SpotlightRateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSpotlightRate>
+        }
+        groupBy: {
+          args: Prisma.SpotlightRateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightRateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SpotlightRateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SpotlightRateCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -870,6 +1320,91 @@ export const SessionScalarFieldEnum = {
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const SpotlightScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  userId: 'userId',
+  lat: 'lat',
+  lng: 'lng',
+  isActive: 'isActive',
+  visibility: 'visibility',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SpotlightScalarFieldEnum = (typeof SpotlightScalarFieldEnum)[keyof typeof SpotlightScalarFieldEnum]
+
+
+export const SpotlightCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  iconUrl: 'iconUrl',
+  coverImage: 'coverImage',
+  isActive: 'isActive',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SpotlightCategoryScalarFieldEnum = (typeof SpotlightCategoryScalarFieldEnum)[keyof typeof SpotlightCategoryScalarFieldEnum]
+
+
+export const SpotlightMediaScalarFieldEnum = {
+  id: 'id',
+  spotlightId: 'spotlightId',
+  title: 'title',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  src: 'src',
+  userId: 'userId'
+} as const
+
+export type SpotlightMediaScalarFieldEnum = (typeof SpotlightMediaScalarFieldEnum)[keyof typeof SpotlightMediaScalarFieldEnum]
+
+
+export const SpotlightCommentScalarFieldEnum = {
+  id: 'id',
+  spotlightId: 'spotlightId',
+  content: 'content',
+  isActive: 'isActive',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SpotlightCommentScalarFieldEnum = (typeof SpotlightCommentScalarFieldEnum)[keyof typeof SpotlightCommentScalarFieldEnum]
+
+
+export const SpotlightMediaCommentScalarFieldEnum = {
+  id: 'id',
+  spotlightId: 'spotlightId',
+  mediaId: 'mediaId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  content: 'content',
+  userId: 'userId'
+} as const
+
+export type SpotlightMediaCommentScalarFieldEnum = (typeof SpotlightMediaCommentScalarFieldEnum)[keyof typeof SpotlightMediaCommentScalarFieldEnum]
+
+
+export const SpotlightRateScalarFieldEnum = {
+  id: 'id',
+  spotlightId: 'spotlightId',
+  value: 'value',
+  userId: 'userId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SpotlightRateScalarFieldEnum = (typeof SpotlightRateScalarFieldEnum)[keyof typeof SpotlightRateScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -995,6 +1530,20 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
+
+/**
+ * Reference to a field of type 'Visibility'
+ */
+export type EnumVisibilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Visibility'>
+    
+
+
+/**
+ * Reference to a field of type 'Visibility[]'
+ */
+export type ListEnumVisibilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Visibility[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -1095,6 +1644,12 @@ export type GlobalOmitConfig = {
   geoPath?: Prisma.GeoPathOmit
   geoCord?: Prisma.GeoCordOmit
   session?: Prisma.SessionOmit
+  spotlight?: Prisma.SpotlightOmit
+  spotlightCategory?: Prisma.SpotlightCategoryOmit
+  spotlightMedia?: Prisma.SpotlightMediaOmit
+  spotlightComment?: Prisma.SpotlightCommentOmit
+  spotlightMediaComment?: Prisma.SpotlightMediaCommentOmit
+  spotlightRate?: Prisma.SpotlightRateOmit
 }
 
 /* Types for Logging */

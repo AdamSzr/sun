@@ -34,3 +34,4 @@ export const apiErrors = {
   // MARKET
   40000: `Specified "target" not supported`,
 } as const
+

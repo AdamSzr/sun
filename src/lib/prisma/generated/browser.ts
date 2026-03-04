@@ -42,3 +42,33 @@ export type GeoCord = Prisma.GeoCordModel
  * 
  */
 export type Session = Prisma.SessionModel
+/**
+ * Model Spotlight
+ * 
+ */
+export type Spotlight = Prisma.SpotlightModel
+/**
+ * Model SpotlightCategory
+ * 
+ */
+export type SpotlightCategory = Prisma.SpotlightCategoryModel
+/**
+ * Model SpotlightMedia
+ * 
+ */
+export type SpotlightMedia = Prisma.SpotlightMediaModel
+/**
+ * Model SpotlightComment
+ * 
+ */
+export type SpotlightComment = Prisma.SpotlightCommentModel
+/**
+ * Model SpotlightMediaComment
+ * 
+ */
+export type SpotlightMediaComment = Prisma.SpotlightMediaCommentModel
+/**
+ * Model SpotlightRate
+ * 
+ */
+export type SpotlightRate = Prisma.SpotlightRateModel

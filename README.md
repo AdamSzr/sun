@@ -7,4 +7,7 @@ Pack of usefull services, for local network in your home
 * workout timer
 * fitatu
 * redis-cpy ✅
-* 
+ 
+
+
+npx prisma generate
