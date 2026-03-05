@@ -13,6 +13,9 @@ export * from './Input';
 export { default as Label } from './Label';
 export * from './Label';
 
+export { default as Text } from './Text';
+export * from './Text';
+
 export { default as Link } from './Link';
 export * from './Link';
 

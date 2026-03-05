@@ -12,9 +12,9 @@ export type SpotlightCategory = Timestamped & {
     id: string
     name: string
     slug: string
-    description?: string
-    iconUrl?: string
-    coverImage?: string
+    description?: string | null
+    iconUrl?: string | null
+    coverImage?: string | null
     isActive: boolean
     order: number
 }
@@ -29,7 +29,7 @@ export type Spotlight = Timestamped & {
     lat: number
     lng: number
     isActive: boolean
-    visibility: 'public' | 'friends' | 'private'
+    visibility: 'PUBLIC' | 'FRIENDS' | 'PRIVATE'
     categories: SpotlightCategory[]
 }
 
