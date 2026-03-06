@@ -1,31 +1,31 @@
 import { NextRequest } from 'next/server'
+import { spotlightManager } from '@fet/services/SpotlightManager'
 import { SuccessResponse, ApiErrorResponse } from '@fet/responses'
 import { DynamicRoute } from '@fet/index'
-import { spotlightManager } from '@fet/services/SpotlightManager'
 
 type Params = DynamicRoute<{ id: string }>
 
-export async function GET(_: NextRequest, { params }: Params) {
-    const { id } = await params
+export async function GET( _:NextRequest, { params }:Params ) {
+  const { id } = await params
 
-    const spotlight = await spotlightManager.getById(id)
+  const spotlight = await spotlightManager.getById( id )
 
-    if (!spotlight) return ApiErrorResponse(10002)
-    return SuccessResponse(spotlight)
+  if (!spotlight) return ApiErrorResponse( 10002 )
+  return SuccessResponse( spotlight )
 }
 
-export async function PATCH(req: NextRequest, { params }: Params) {
-    const { id } = await params
-    const body = await req.json()
+export async function PATCH( req:NextRequest, { params }:Params ) {
+  const { id } = await params
+  const body = await req.json()
 
-    const spotlight = await spotlightManager.update(id, body)
+  const spotlight = await spotlightManager.update( id, body )
 
-    return SuccessResponse(spotlight)
+  return SuccessResponse( spotlight )
 }
 
-export async function DELETE(_: NextRequest, { params }: Params) {
-    const { id } = await params
+export async function DELETE( _:NextRequest, { params }:Params ) {
+  const { id } = await params
 
-    const spotlight = await spotlightManager.delete(id)
-    return SuccessResponse(spotlight)
+  const spotlight = await spotlightManager.delete( id )
+  return SuccessResponse( spotlight )
 }
