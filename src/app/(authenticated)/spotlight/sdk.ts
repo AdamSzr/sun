@@ -48,7 +48,7 @@ async function del<T>(url: string): Promise<T> {
 
 // ── Spotlight ─────────────────────────────────────────────────────────────────
 
-export type CreateSpotlightDto = Pick<Spotlight, 'title' | 'description' | 'lat' | 'lng' | 'visibility'> & {
+export type CreateSpotlightDto = Pick<Spotlight, 'title' | 'description' | 'lat' | 'lng' | 'visibility' | 'userId'> & {
     categoryIds?: string[]
 }
 

@@ -17,7 +17,7 @@ export class SpotlightManager {
                 ...(where.visibility ? { visibility: where.visibility as any } : {}),
                 ...(where.categorySlug ? { categories: { some: { slug: where.categorySlug } } } : {}),
             },
-            include: { categories: true },
+            include: { categories: true, media: true },
             orderBy: { createdAt: `desc` },
         })
     }
@@ -25,7 +25,7 @@ export class SpotlightManager {
     getById(id: string) {
         return prisma.spotlight.findUnique({
             where: { id },
-            include: { categories: true },
+            include: { categories: true, media: true },
         })
     }
 
@@ -110,6 +110,91 @@ export class SpotlightManager {
 
     deleteMedia(mediaId: string) {
         return prisma.spotlightMedia.delete({ where: { id: mediaId } })
+    }
+
+    // ── Rates ─────────────────────────────────────────────────────────────────────
+
+    getRatesBySpotlightId(spotlightId: string) {
+        return prisma.spotlightRate.findMany({
+            where: { spotlightId, isActive: true },
+            orderBy: { createdAt: `desc` },
+        })
+    }
+
+    createRate(spotlightId: string, userId: string, value: number) {
+        return prisma.spotlightRate.create({
+            data: {
+                value,
+                spotlightId,
+                userId,
+                isActive: true
+            },
+        })
+    }
+    // ── Comments ──────────────────────────────────────────────────────────────────
+
+    async getCommentsBySpotlightId(spotlightId: string) {
+        const comments = await prisma.spotlightComment.findMany({
+            where: { spotlightId, isActive: true },
+            orderBy: { createdAt: `desc` },
+        })
+
+        const { userManager } = await import('@/features/services/UserManager');
+        return Promise.all(comments.map(async c => {
+            const numId = parseInt(c.userId, 10)
+            if (!isNaN(numId)) {
+                const u = await userManager.findById(numId).catch(() => null)
+                return { ...c, userName: u?.name || 'Użytkownik' }
+            }
+            return { ...c, userName: 'Użytkownik' }
+        }))
+    }
+
+    async createComment(spotlightId: string, userId: string, content: string) {
+        const comment = await prisma.spotlightComment.create({
+            data: {
+                content,
+                spotlightId,
+                userId,
+                isActive: true
+            },
+        })
+
+        const { userManager } = await import('@/features/services/UserManager');
+        const numId = parseInt(userId, 10)
+        let userName = 'Użytkownik'
+        if (!isNaN(numId)) {
+            const u = await userManager.findById(numId).catch(() => null)
+            if (u) userName = u.name
+        }
+
+        return { ...comment, userName }
+    }
+
+    getCommentById(commentId: string) {
+        return prisma.spotlightComment.findUnique({ where: { id: commentId } })
+    }
+
+    deleteComment(commentId: string) {
+        return prisma.spotlightComment.delete({ where: { id: commentId } })
+    }
+
+    // ── Profile ───────────────────────────────────────────────────────────────────
+
+    getUserSpotlights(userId: string) {
+        return prisma.spotlight.findMany({
+            where: { userId, isActive: true },
+            include: { categories: true, media: true },
+            orderBy: { createdAt: `desc` }
+        })
+    }
+
+    getUserComments(userId: string) {
+        return prisma.spotlightComment.findMany({
+            where: { userId, isActive: true },
+            include: { spotlight: { select: { title: true } } },
+            orderBy: { createdAt: `desc` }
+        })
     }
 }
 

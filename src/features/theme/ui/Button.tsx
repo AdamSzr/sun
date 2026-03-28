@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react'
 import composeClassName from '@/utils/composeClassName'
 
-type ButtonProps = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children?: ReactNode
-  type?:  `submit` | `reset` | `button`
+  type?: 'submit' | 'reset' | 'button'
   disabled?: boolean
   className?: string
 };

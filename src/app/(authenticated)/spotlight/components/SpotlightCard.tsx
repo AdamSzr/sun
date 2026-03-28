@@ -21,12 +21,24 @@ export default function SpotlightCard({ spotlight }: SpotlightCardProps) {
         hover:shadow-[0_15px_30px_-10px_rgba(0,0,0,0.4)]
       "
         >
-            {/* Media Preview (Placeholder for now) */}
+            {/* Media Preview */}
             <div className="aspect-video w-full bg-gray-900 overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
-                <div className="absolute inset-0 flex items-center justify-center text-gray-700 font-bold italic opacity-20">
-                    SPOTLIGHT PREVIEW
-                </div>
+                {spotlight.media && spotlight.media.length > 0 ? (
+                    <img 
+                        src={spotlight.media[0].src} 
+                        alt={spotlight.media[0].title || spotlight.title} 
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                ) : (
+                    <>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
+                        <div className="absolute inset-0 flex items-center justify-center text-gray-700 font-bold italic opacity-20">
+                            SPOTLIGHT PREVIEW
+                        </div>
+                    </>
+                )}
+                {/* Gradient overlay to make badges pop on light images */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none" />
 
                 {/* Category Badge */}
                 <div className="absolute top-3 left-3 z-20">

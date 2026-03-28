@@ -4,17 +4,30 @@ import React, { useActionState, useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Text, Flex, Form, Input, Label, Button, Hint } from '@fet/theme/ui'
-import { createSpotlight } from './actions'
-import { SpotlightMediaSdk } from '../sdk'
-import { SpotlightCategory } from '../types'
+import { updateSpotlight } from './actions'
+import { SpotlightMediaSdk } from '../../sdk'
+import { SpotlightCategory, SpotlightMedia } from '../../types'
 
 type Props = {
+    spotlight: {
+        id: string;
+        title: string;
+        description: string;
+        lat: number;
+        lng: number;
+        visibility: "PUBLIC" | "FRIENDS" | "PRIVATE";
+        categories: SpotlightCategory[];
+        media: SpotlightMedia[];
+    }
     categories: SpotlightCategory[]
 }
 
-export default function CreateSpotlightForm({ categories }: Props) {
+export default function EditSpotlightForm({ spotlight, categories }: Props) {
     const router = useRouter()
-    const [state, action, pending] = useActionState(createSpotlight, undefined as any)
+    const updateAction = updateSpotlight.bind(null, spotlight.id)
+    const [state, action, pending] = useActionState(updateAction, { success: undefined as any, message: '' })
+
+    const [existingMedia, setExistingMedia] = useState<SpotlightMedia[]>(spotlight.media)
     const [files, setFiles] = useState<File[]>([])
     const [previews, setPreviews] = useState<string[]>([])
     const [uploading, setUploading] = useState(false)
@@ -22,8 +35,8 @@ export default function CreateSpotlightForm({ categories }: Props) {
     const fileInputRef = useRef<HTMLInputElement>(null)
 
     // Geolocation States
-    const [lat, setLat] = useState<string>('')
-    const [lng, setLng] = useState<string>('')
+    const [lat, setLat] = useState<string>(spotlight.lat.toString())
+    const [lng, setLng] = useState<string>(spotlight.lng.toString())
     const [isFetchingLocation, setIsFetchingLocation] = useState(false)
 
     const handleGetLocation = () => {
@@ -55,13 +68,11 @@ export default function CreateSpotlightForm({ categories }: Props) {
         return () => urls.forEach(u => URL.revokeObjectURL(u))
     }, [files])
 
-    // After spotlight is created, upload images and redirect
+    // After spotlight is updated, upload new images and redirect
     useEffect(() => {
-        if (state?.success && state.spotlightId) {
-            const spotlightId = state.spotlightId
-
+        if (state?.success) {
             if (files.length === 0) {
-                router.push('/spotlight')
+                router.push(`/spotlight/${spotlight.id}`)
                 return
             }
 
@@ -71,13 +82,13 @@ export default function CreateSpotlightForm({ categories }: Props) {
                 for (let i = 0; i < files.length; i++) {
                     setUploadProgress(`Przesyłanie ${i + 1}/${files.length}...`)
                     try {
-                        await SpotlightMediaSdk.upload(spotlightId, files[i])
+                        await SpotlightMediaSdk.upload(spotlight.id, files[i])
                     } catch (err) {
                         console.error(`Failed to upload file ${files[i].name}:`, err)
                     }
                 }
                 setUploading(false)
-                router.push('/spotlight')
+                router.push(`/spotlight/${spotlight.id}`)
             }
 
             uploadAll()
@@ -88,31 +99,41 @@ export default function CreateSpotlightForm({ categories }: Props) {
         const selected = e.target.files
         if (!selected) return
         const newFiles = Array.from(selected)
-
         setFiles(prev => [...prev, ...newFiles])
-
         if (fileInputRef.current) fileInputRef.current.value = ''
     }
 
-    const removeFile = (index: number) => {
+    const removeNewFile = (index: number) => {
         setFiles(prev => prev.filter((_, i) => i !== index))
     }
 
-    console.log({ files })
+    const deleteExistingMedia = async (mediaId: string) => {
+        if (!confirm('Czy na pewno chcesz usunąć to zdjęcie?')) return
+
+        try {
+            await SpotlightMediaSdk.delete(spotlight.id, mediaId)
+            setExistingMedia(prev => prev.filter(m => m.id !== mediaId))
+        } catch (err) {
+            console.error('Failed to delete media:', err)
+            alert('Nie udało się usunąć zdjęcia.')
+        }
+    }
+
+    const selectedCategoryIds = spotlight.categories.map(c => c.id)
 
     const isDisabled = pending || uploading
 
     return (
         <div className="max-w-3xl mx-auto py-12 px-6">
             <div className="mb-10 space-y-2">
-                <Link href="/spotlight" className="text-sm text-gray-500 hover:text-orange-500 transition-colors">
-                    ← Powrót do listy
+                <Link href={`/spotlight/${spotlight.id}`} className="text-sm text-gray-500 hover:text-orange-500 transition-colors">
+                    ← Powrót do Spotlight
                 </Link>
                 <Text as="h1" className="text-4xl font-bold tracking-tight text-white">
-                    Dodaj nowy Spotlight
+                    Edytuj Spotlight
                 </Text>
                 <Text className="text-gray-400">
-                    Podziel się wyjątkowym miejscem ze społecznością Sun.
+                    Wprowadź poprawki do tego miejsca.
                 </Text>
             </div>
 
@@ -130,6 +151,7 @@ export default function CreateSpotlightForm({ categories }: Props) {
                         <Input
                             id="title"
                             name="title"
+                            defaultValue={spotlight.title}
                             className="bg-white/5 border-white/10 text-white h-12 rounded-xl focus:border-orange-500/50"
                             placeholder="np. Ukryty wodospad w lesie"
                             required
@@ -141,6 +163,7 @@ export default function CreateSpotlightForm({ categories }: Props) {
                         <textarea
                             id="description"
                             name="description"
+                            defaultValue={spotlight.description}
                             className="
                 bg-white/5 border border-white/10 text-white p-4 rounded-xl 
                 min-h-[150px] focus:outline-none focus:border-orange-500/50 transition-colors
@@ -174,7 +197,7 @@ export default function CreateSpotlightForm({ categories }: Props) {
                                     value={lat}
                                     onChange={(e) => setLat(e.target.value)}
                                     className="bg-white/5 border-white/10 text-white h-12 rounded-xl focus:border-orange-500/50"
-                                    placeholder="np. 52.2296"
+                                    placeholder="0.0000"
                                     required
                                 />
                             </Flex>
@@ -188,7 +211,7 @@ export default function CreateSpotlightForm({ categories }: Props) {
                                     value={lng}
                                     onChange={(e) => setLng(e.target.value)}
                                     className="bg-white/5 border-white/10 text-white h-12 rounded-xl focus:border-orange-500/50"
-                                    placeholder="np. 21.0122"
+                                    placeholder="0.0000"
                                     required
                                 />
                             </Flex>
@@ -198,67 +221,113 @@ export default function CreateSpotlightForm({ categories }: Props) {
                     <Flex className="flex-col gap-2">
                         <Label className="text-gray-300 ml-1">Kategorie (wybierz co najmniej jedną)</Label>
                         <div className="flex flex-wrap gap-2 p-4 bg-white/5 border border-white/10 rounded-xl">
-                            {categories.map(cat => (
-                                <label key={cat.id} className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent has-[:checked]:border-orange-500/30 has-[:checked]:bg-orange-500/10">
-                                    <input type="checkbox" name="categoryIds" value={cat.id} className="accent-orange-500 h-4 w-4" />
-                                    <span className="text-sm text-gray-300">{cat.name}</span>
-                                </label>
-                            ))}
+                            {categories.map(cat => {
+                                const isSelected = selectedCategoryIds.includes(cat.id);
+                                return (
+                                    <label key={cat.id} className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent has-[:checked]:border-orange-500/30 has-[:checked]:bg-orange-500/10">
+                                        <input type="checkbox" name="categoryIds" value={cat.id} defaultChecked={isSelected} className="accent-orange-500 h-4 w-4" />
+                                        <span className="text-sm text-gray-300">{cat.name}</span>
+                                    </label>
+                                )
+                            })}
                         </div>
                     </Flex>
 
-                    {/* Image upload section */}
+                    <Flex className="flex-col gap-2">
+                        <Label htmlFor="visibility" className="text-gray-300 ml-1">Widoczność</Label>
+                        <select
+                            id="visibility"
+                            name="visibility"
+                            defaultValue={spotlight.visibility}
+                            className="bg-white/5 border border-white/10 text-white h-12 px-4 rounded-xl focus:outline-none focus:border-orange-500/50"
+                        >
+                            <option value="PUBLIC">Publiczne</option>
+                            <option value="FRIENDS">Dla znajomych</option>
+                            <option value="PRIVATE">Prywatne</option>
+                        </select>
+                    </Flex>
+
+                    {/* Image Management Section */}
                     <Flex className="flex-col gap-2">
                         <Label className="text-gray-300 ml-1">Zdjęcia</Label>
                         <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-4">
-                            {/* Preview grid */}
-                            {previews.length > 0 && (
-                                <div className="grid grid-cols-3 gap-3">
-                                    {previews.map((src, i) => (
-                                        <div key={i} className="relative group aspect-square rounded-xl overflow-hidden border border-white/10">
-                                            <img
-                                                src={src}
-                                                alt={files[i]?.name}
-                                                className="w-full h-full object-cover"
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={() => removeFile(i)}
-                                                className="
-                                                    absolute top-2 right-2 w-7 h-7 rounded-full
-                                                    bg-black/60 backdrop-blur text-white text-sm
-                                                    flex items-center justify-center
-                                                    opacity-0 group-hover:opacity-100 transition-opacity
-                                                    hover:bg-red-500/80 cursor-pointer
-                                                "
-                                            >
-                                                ✕
-                                            </button>
-                                            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-2">
-                                                <span className="text-xs text-gray-200 truncate block">{files[i]?.name}</span>
+                            {/* Existing Media Grid */}
+                            {existingMedia.length > 0 && (
+                                <div className="space-y-2">
+                                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Istniejące zdjęcia</span>
+                                    <div className="grid grid-cols-3 gap-3">
+                                        {existingMedia.map((m) => (
+                                            <div key={m.id} className="relative group aspect-square rounded-xl overflow-hidden border border-white/10">
+                                                <img
+                                                    src={m.src}
+                                                    alt={m.title}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => deleteExistingMedia(m.id)}
+                                                    className="
+                                                        absolute top-2 right-2 w-7 h-7 rounded-full
+                                                        bg-black/60 backdrop-blur text-white text-sm
+                                                        flex items-center justify-center
+                                                        opacity-0 group-hover:opacity-100 transition-opacity
+                                                        hover:bg-red-500/80 cursor-pointer
+                                                    "
+                                                >
+                                                    ✕
+                                                </button>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
                             )}
 
-                            {/* Drop zone / add button */}
+                            {/* New Previews Grid */}
+                            {previews.length > 0 && (
+                                <div className="space-y-2">
+                                    <span className="text-xs font-semibold text-orange-500/70 uppercase tracking-wider ml-1">Nowe zdjęcia do dodania</span>
+                                    <div className="grid grid-cols-3 gap-3">
+                                        {previews.map((src, i) => (
+                                            <div key={i} className="relative group aspect-square rounded-xl overflow-hidden border border-orange-500/20 bg-orange-500/5">
+                                                <img
+                                                    src={src}
+                                                    alt={files[i]?.name}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeNewFile(i)}
+                                                    className="
+                                                        absolute top-2 right-2 w-7 h-7 rounded-full
+                                                        bg-black/60 backdrop-blur text-white text-sm
+                                                        flex items-center justify-center
+                                                        opacity-0 group-hover:opacity-100 transition-opacity
+                                                        hover:bg-red-500/80 cursor-pointer
+                                                    "
+                                                >
+                                                    ✕
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Add button */}
                             <button
                                 type="button"
                                 onClick={() => fileInputRef.current?.click()}
                                 className="
-                                    w-full py-8 rounded-xl border-2 border-dashed border-white/10
+                                    w-full py-6 rounded-xl border-2 border-dashed border-white/10
                                     hover:border-orange-500/40 hover:bg-orange-500/5
                                     transition-all duration-200 cursor-pointer
                                     flex flex-col items-center gap-2
                                 "
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                 </svg>
-                                <span className="text-sm text-gray-400">
-                                    {files.length > 0 ? 'Dodaj więcej zdjęć' : 'Kliknij, aby wybrać zdjęcia'}
-                                </span>
+                                <span className="text-sm text-gray-400">Dodaj zdjęcia</span>
                             </button>
 
                             <input
@@ -270,19 +339,6 @@ export default function CreateSpotlightForm({ categories }: Props) {
                                 className="hidden"
                             />
                         </div>
-                    </Flex>
-
-                    <Flex className="flex-col gap-2">
-                        <Label htmlFor="visibility" className="text-gray-300 ml-1">Widoczność</Label>
-                        <select
-                            id="visibility"
-                            name="visibility"
-                            className="bg-white/5 border border-white/10 text-white h-12 px-4 rounded-xl focus:outline-none focus:border-orange-500/50"
-                        >
-                            <option value="PUBLIC">Publiczne</option>
-                            <option value="FRIENDS">Dla znajomych</option>
-                            <option value="PRIVATE">Prywatne</option>
-                        </select>
                     </Flex>
                 </div>
 
@@ -299,14 +355,14 @@ export default function CreateSpotlightForm({ categories }: Props) {
                     {uploading
                         ? uploadProgress
                         : pending
-                            ? 'Tworzenie...'
-                            : `Opublikuj Spotlight${files.length > 0 ? ` (${files.length} zdjęć)` : ''}`
+                            ? 'Zapisywanie...'
+                            : `Zapisz zmiany${files.length > 0 ? ` (+ ${files.length} zdjęć)` : ''}`
                     }
                 </Button>
 
-                {state?.success === false && (
+                {state.success === false && (
                     <Hint variant="error" className="py-4 rounded-2xl bg-red-500/10 border-red-500/20 text-red-400">
-                        {state.message || 'Wystąpił błąd podczas tworzenia.'}
+                        {state.message || 'Wystąpił błąd podczas aktualizacji.'}
                     </Hint>
                 )}
             </Form>

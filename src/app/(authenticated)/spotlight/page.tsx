@@ -25,7 +25,7 @@ export default async function SpotlightPage({ searchParams }: Props) {
   return (
     <div className="min-h-screen bg-[#050505] text-white p-8">
       {/* Header Section */}
-      <Flex className="justify-between items-end mb-12">
+      <Flex className="flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
         <div className="space-y-2">
           <Text as="h1" className="text-4xl font-bold tracking-tight bg-gradient-to-r from-white to-gray-500 bg-clip-text text-transparent">
             Odkrywaj Spotlight
@@ -38,7 +38,7 @@ export default async function SpotlightPage({ searchParams }: Props) {
         <Link
           href="/spotlight/create"
           className="
-            px-6 py-3 rounded-xl font-semibold
+            px-6 py-3 rounded-xl font-semibold w-full md:w-auto text-center
             bg-orange-600 hover:bg-orange-700
             shadow-[0_10px_20px_-5px_rgba(234,88,12,0.4)]
             transition-all active:scale-95
@@ -48,13 +48,18 @@ export default async function SpotlightPage({ searchParams }: Props) {
         </Link>
       </Flex>
 
-      <div className="flex gap-10">
+      <div className="flex flex-col lg:flex-row gap-10">
         {/* Sidebar Filters */}
-        <aside className="w-64 shrink-0 space-y-8">
+        <aside className="w-full lg:w-64 shrink-0 space-y-8">
           <div className="space-y-4">
-            <Text as="h3" className="text-sm font-bold uppercase tracking-widest text-gray-500">
-              Kategorie
-            </Text>
+            <Flex className="justify-between items-center">
+              <Text as="h3" className="text-sm font-bold uppercase tracking-widest text-gray-500">
+                Kategorie
+              </Text>
+              <Link href="/spotlight/categories/create" className="text-xs text-orange-500 hover:text-orange-400 font-semibold transition-colors">
+                + Dodaj
+              </Link>
+            </Flex>
             <div className="flex flex-col gap-1">
               <Link
                 href="/spotlight"

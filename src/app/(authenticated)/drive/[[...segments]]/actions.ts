@@ -2,12 +2,18 @@
 
 import { revalidatePath } from "next/cache"
 import { driveManager } from "@fet/services/DriveManager"
+import { cookies } from "next/headers"
+import auth, { authUser } from "@fet/auth"
 
-export async function createDirectory( formData:FormData ) {
-  const dirName:FormDataEntryValue[] | null = formData.getAll( `dirName` )
-  const acctualPath:FormDataEntryValue[] | null = formData.getAll( `acctualPath` )
+export async function createDirectory(formData: FormData) {
+  const authResult = await authUser()
+  if (!authResult) return
+  const { user } = authResult
 
-  const success = await driveManager.mkdir( `${acctualPath}/${dirName}` )
+  const dirName: FormDataEntryValue[] | null = formData.getAll(`dirName`)
+  const acctualPath: FormDataEntryValue[] | null = formData.getAll(`acctualPath`)
 
-  if (success) revalidatePath( `/drive` )
+  const success = await driveManager.mkdir(`${acctualPath}/${dirName}`)
+
+  if (success) revalidatePath(`/drive`)
 }

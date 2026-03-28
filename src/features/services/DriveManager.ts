@@ -39,7 +39,7 @@ export default class DriveManager {
         return false
       }
 
-      return fsPromises.mkdir( absPath ).then( () => true ) } )
+      return fsPromises.mkdir( absPath, { recursive: true } ).then( () => true ) } )
       .then( success => {
         const discObject:DiskObject = {
           type: `DIR`,
@@ -89,7 +89,7 @@ export default class DriveManager {
 
     const dirExists = await directoryExist( dirPath )
 
-    if (!dirExists) await mkdir( dirPath )
+    if (!dirExists) await mkdir( dirPath, { recursive: true } )
 
     const p = path.join( dirPath, file.name )
     const arrayBuffer = await file.arrayBuffer()
@@ -100,6 +100,21 @@ export default class DriveManager {
       return true
     } catch (err) {
       driveLogger.error( `Błąd zapisu pliku:`, err )
+      return false
+    }
+  }
+
+  async deleteFile(relPath: string) {
+    const p = path.join( this.rootDrivePath, relPath )
+    try {
+      const exists = await fileExists(p)
+      if (exists) {
+        await fsPromises.unlink(p)
+        return true
+      }
+      return false
+    } catch (err) {
+      driveLogger.error(`Błąd usuwania pliku:`, err)
       return false
     }
   }

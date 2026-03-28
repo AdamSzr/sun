@@ -1,14 +1,14 @@
-import { ReactNode } from "react"
+import { HTMLAttributes, ReactNode } from "react"
 import composeClassName from "@/utils/composeClassName"
 
-export type FlexProps = {
+export type FlexProps = HTMLAttributes<HTMLDivElement> & {
   children?: ReactNode
   className?: string
 };
 
-export default function Flex({ children, className }:FlexProps) {
+export default function Flex({ children, className, ...props }:FlexProps) {
   return (
-    <div className={composeClassName( `flex gap-2`, className )}>
+    <div {...props} className={composeClassName( `flex gap-2`, className )}>
       {children}
     </div>
   )

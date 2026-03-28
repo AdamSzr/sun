@@ -1,14 +1,10 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 import { spotlightManager } from "@fet/services/SpotlightManager"
-import { authUser } from "@fet/auth"
 
-
-export async function createSpotlight(prevState: any, formData: FormData) {
-    const authResult = await authUser()
-    if (!authResult) return
-    const { user } = authResult
+export async function updateSpotlight(id: string, prevState: any, formData: FormData) {
     const title = formData.get("title") as string
     const description = formData.get("description") as string
     const lat = parseFloat(formData.get("lat") as string)
@@ -17,20 +13,21 @@ export async function createSpotlight(prevState: any, formData: FormData) {
     const categoryIds = formData.getAll("categoryIds") as string[]
 
     try {
-        const spotlight = await spotlightManager.create({
+        await spotlightManager.update(id, {
             title,
             description,
             lat,
             lng,
             visibility,
             categoryIds,
-            userId: `${user.id}`
         })
 
+        revalidatePath(`/spotlight/${id}`)
         revalidatePath("/spotlight")
-        return { success: true, spotlightId: spotlight.id }
     } catch (error) {
-        console.error("Create spotlight error:", error)
-        return { success: false, message: "Nie udało się utworzyć Spotlight." }
+        console.error("Update spotlight error:", error)
+        return { success: false, message: "Nie udało się zaktualizować Spotlight." }
     }
+
+    redirect(`/spotlight/${id}`)
 }

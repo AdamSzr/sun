@@ -31,6 +31,7 @@ export type Spotlight = Timestamped & {
     isActive: boolean
     visibility: 'PUBLIC' | 'FRIENDS' | 'PRIVATE'
     categories: SpotlightCategory[]
+    media: SpotlightMedia[]
 }
 
 // ── Media ─────────────────────────────────────────────────────────────────────
@@ -52,6 +53,7 @@ export type SpotlightComment = Timestamped & {
     content: string
     isActive: boolean
     userId: string
+    userName?: string
 }
 
 export type SpotlightMediaComment = Timestamped & {
