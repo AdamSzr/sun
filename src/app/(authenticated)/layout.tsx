@@ -25,6 +25,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         logo={<Image alt="Sun" width={16} height={16} src="/logo.svg" />}
         logoutBtn={<LogoutButton />}
         username={user.name}
+        isGod={user.role?.name === 'GOD'}
       />
       <div className="pt-14">
         {children}

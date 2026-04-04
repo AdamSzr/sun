@@ -11,9 +11,10 @@ export type SideNavProps = {
   logoutBtn?: ReactNode
   className?: string
   username?: string
+  isGod?: boolean
 }
 
-export default function SideNav({ logo, logoutBtn, username }: SideNavProps) {
+export default function SideNav({ logo, logoutBtn, username, isGod }: SideNavProps) {
   return (
     <header
       className="
@@ -30,6 +31,14 @@ export default function SideNav({ logo, logoutBtn, username }: SideNavProps) {
         {logo && (
           <Link href="/" className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-black-600 to-black-200 shadow-md shadow-orange-900/40 transition-transform hover:scale-105 active:scale-95">
             {logo}
+          </Link>
+        )}
+        {isGod && (
+          <Link 
+            href="/panel" 
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-600/10 border border-orange-500/20 text-orange-500 hover:bg-orange-600/20 transition-all font-bold text-xs uppercase tracking-widest"
+          >
+            <span className="text-sm">⚡</span> Panel
           </Link>
         )}
       </div>

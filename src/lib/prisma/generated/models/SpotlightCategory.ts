@@ -514,10 +514,6 @@ export type SpotlightCategoryUncheckedUpdateManyWithoutSpotlightsNestedInput = {
   deleteMany?: Prisma.SpotlightCategoryScalarWhereInput | Prisma.SpotlightCategoryScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type SpotlightCategoryCreateWithoutSpotlightsInput = {
   id?: string
   name: string

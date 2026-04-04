@@ -28,10 +28,12 @@ export type AggregateUser = {
 
 export type UserAvgAggregateOutputType = {
   id: number | null
+  roleId: number | null
 }
 
 export type UserSumAggregateOutputType = {
   id: number | null
+  roleId: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -40,6 +42,7 @@ export type UserMinAggregateOutputType = {
   password: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  roleId: number | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -48,6 +51,7 @@ export type UserMaxAggregateOutputType = {
   password: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  roleId: number | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -56,16 +60,19 @@ export type UserCountAggregateOutputType = {
   password: number
   createdAt: number
   updatedAt: number
+  roleId: number
   _all: number
 }
 
 
 export type UserAvgAggregateInputType = {
   id?: true
+  roleId?: true
 }
 
 export type UserSumAggregateInputType = {
   id?: true
+  roleId?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -74,6 +81,7 @@ export type UserMinAggregateInputType = {
   password?: true
   createdAt?: true
   updatedAt?: true
+  roleId?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -82,6 +90,7 @@ export type UserMaxAggregateInputType = {
   password?: true
   createdAt?: true
   updatedAt?: true
+  roleId?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -90,6 +99,7 @@ export type UserCountAggregateInputType = {
   password?: true
   createdAt?: true
   updatedAt?: true
+  roleId?: true
   _all?: true
 }
 
@@ -185,6 +195,7 @@ export type UserGroupByOutputType = {
   password: string
   createdAt: Date
   updatedAt: Date
+  roleId: number | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -216,6 +227,9 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  roleId?: Prisma.IntNullableFilter<"User"> | number | null
+  role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
+  permissions?: Prisma.PermissionListRelationFilter
   geoPath?: Prisma.GeoPathListRelationFilter
   todo?: Prisma.TodoItemListRelationFilter
   session?: Prisma.XOR<Prisma.SessionNullableScalarRelationFilter, Prisma.SessionWhereInput> | null
@@ -227,6 +241,9 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  role?: Prisma.RoleOrderByWithRelationInput
+  permissions?: Prisma.PermissionOrderByRelationAggregateInput
   geoPath?: Prisma.GeoPathOrderByRelationAggregateInput
   todo?: Prisma.TodoItemOrderByRelationAggregateInput
   session?: Prisma.SessionOrderByWithRelationInput
@@ -241,6 +258,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  roleId?: Prisma.IntNullableFilter<"User"> | number | null
+  role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
+  permissions?: Prisma.PermissionListRelationFilter
   geoPath?: Prisma.GeoPathListRelationFilter
   todo?: Prisma.TodoItemListRelationFilter
   session?: Prisma.XOR<Prisma.SessionNullableScalarRelationFilter, Prisma.SessionWhereInput> | null
@@ -252,6 +272,7 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -268,6 +289,7 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  roleId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null
 }
 
 export type UserCreateInput = {
@@ -275,6 +297,8 @@ export type UserCreateInput = {
   password: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  permissions?: Prisma.PermissionCreateNestedManyWithoutUsersInput
   geoPath?: Prisma.GeoPathCreateNestedManyWithoutUserInput
   todo?: Prisma.TodoItemCreateNestedManyWithoutUserInput
   session?: Prisma.SessionCreateNestedOneWithoutUserInput
@@ -286,6 +310,8 @@ export type UserUncheckedCreateInput = {
   password: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  roleId?: number | null
+  permissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUsersInput
   geoPath?: Prisma.GeoPathUncheckedCreateNestedManyWithoutUserInput
   todo?: Prisma.TodoItemUncheckedCreateNestedManyWithoutUserInput
   session?: Prisma.SessionUncheckedCreateNestedOneWithoutUserInput
@@ -296,6 +322,8 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  permissions?: Prisma.PermissionUpdateManyWithoutUsersNestedInput
   geoPath?: Prisma.GeoPathUpdateManyWithoutUserNestedInput
   todo?: Prisma.TodoItemUpdateManyWithoutUserNestedInput
   session?: Prisma.SessionUpdateOneWithoutUserNestedInput
@@ -307,6 +335,8 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  permissions?: Prisma.PermissionUncheckedUpdateManyWithoutUsersNestedInput
   geoPath?: Prisma.GeoPathUncheckedUpdateManyWithoutUserNestedInput
   todo?: Prisma.TodoItemUncheckedUpdateManyWithoutUserNestedInput
   session?: Prisma.SessionUncheckedUpdateOneWithoutUserNestedInput
@@ -318,6 +348,7 @@ export type UserCreateManyInput = {
   password: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  roleId?: number | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -333,6 +364,7 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -341,10 +373,12 @@ export type UserCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -353,6 +387,7 @@ export type UserMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -361,10 +396,22 @@ export type UserMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
+}
+
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
+}
+
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -386,6 +433,94 @@ export type IntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type UserCreateNestedManyWithoutRoleInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRoleInput, Prisma.UserUncheckedCreateWithoutRoleInput> | Prisma.UserCreateWithoutRoleInput[] | Prisma.UserUncheckedCreateWithoutRoleInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRoleInput | Prisma.UserCreateOrConnectWithoutRoleInput[]
+  createMany?: Prisma.UserCreateManyRoleInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutRoleInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRoleInput, Prisma.UserUncheckedCreateWithoutRoleInput> | Prisma.UserCreateWithoutRoleInput[] | Prisma.UserUncheckedCreateWithoutRoleInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRoleInput | Prisma.UserCreateOrConnectWithoutRoleInput[]
+  createMany?: Prisma.UserCreateManyRoleInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutRoleNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRoleInput, Prisma.UserUncheckedCreateWithoutRoleInput> | Prisma.UserCreateWithoutRoleInput[] | Prisma.UserUncheckedCreateWithoutRoleInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRoleInput | Prisma.UserCreateOrConnectWithoutRoleInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutRoleInput | Prisma.UserUpsertWithWhereUniqueWithoutRoleInput[]
+  createMany?: Prisma.UserCreateManyRoleInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutRoleInput | Prisma.UserUpdateWithWhereUniqueWithoutRoleInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutRoleInput | Prisma.UserUpdateManyWithWhereWithoutRoleInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutRoleNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRoleInput, Prisma.UserUncheckedCreateWithoutRoleInput> | Prisma.UserCreateWithoutRoleInput[] | Prisma.UserUncheckedCreateWithoutRoleInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRoleInput | Prisma.UserCreateOrConnectWithoutRoleInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutRoleInput | Prisma.UserUpsertWithWhereUniqueWithoutRoleInput[]
+  createMany?: Prisma.UserCreateManyRoleInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutRoleInput | Prisma.UserUpdateWithWhereUniqueWithoutRoleInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutRoleInput | Prisma.UserUpdateManyWithWhereWithoutRoleInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateNestedManyWithoutPermissionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermissionsInput, Prisma.UserUncheckedCreateWithoutPermissionsInput> | Prisma.UserCreateWithoutPermissionsInput[] | Prisma.UserUncheckedCreateWithoutPermissionsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermissionsInput | Prisma.UserCreateOrConnectWithoutPermissionsInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutPermissionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermissionsInput, Prisma.UserUncheckedCreateWithoutPermissionsInput> | Prisma.UserCreateWithoutPermissionsInput[] | Prisma.UserUncheckedCreateWithoutPermissionsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermissionsInput | Prisma.UserCreateOrConnectWithoutPermissionsInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutPermissionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermissionsInput, Prisma.UserUncheckedCreateWithoutPermissionsInput> | Prisma.UserCreateWithoutPermissionsInput[] | Prisma.UserUncheckedCreateWithoutPermissionsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermissionsInput | Prisma.UserCreateOrConnectWithoutPermissionsInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutPermissionsInput | Prisma.UserUpsertWithWhereUniqueWithoutPermissionsInput[]
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutPermissionsInput | Prisma.UserUpdateWithWhereUniqueWithoutPermissionsInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutPermissionsInput | Prisma.UserUpdateManyWithWhereWithoutPermissionsInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutPermissionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermissionsInput, Prisma.UserUncheckedCreateWithoutPermissionsInput> | Prisma.UserCreateWithoutPermissionsInput[] | Prisma.UserUncheckedCreateWithoutPermissionsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermissionsInput | Prisma.UserCreateOrConnectWithoutPermissionsInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutPermissionsInput | Prisma.UserUpsertWithWhereUniqueWithoutPermissionsInput[]
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutPermissionsInput | Prisma.UserUpdateWithWhereUniqueWithoutPermissionsInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutPermissionsInput | Prisma.UserUpdateManyWithWhereWithoutPermissionsInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
 export type UserCreateNestedOneWithoutTodoInput = {
@@ -430,11 +565,118 @@ export type UserUpdateOneRequiredWithoutSessionNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSessionInput, Prisma.UserUpdateWithoutSessionInput>, Prisma.UserUncheckedUpdateWithoutSessionInput>
 }
 
+export type UserCreateWithoutRoleInput = {
+  name: string
+  password: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  permissions?: Prisma.PermissionCreateNestedManyWithoutUsersInput
+  geoPath?: Prisma.GeoPathCreateNestedManyWithoutUserInput
+  todo?: Prisma.TodoItemCreateNestedManyWithoutUserInput
+  session?: Prisma.SessionCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutRoleInput = {
+  id?: number
+  name: string
+  password: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  permissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUsersInput
+  geoPath?: Prisma.GeoPathUncheckedCreateNestedManyWithoutUserInput
+  todo?: Prisma.TodoItemUncheckedCreateNestedManyWithoutUserInput
+  session?: Prisma.SessionUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutRoleInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRoleInput, Prisma.UserUncheckedCreateWithoutRoleInput>
+}
+
+export type UserCreateManyRoleInputEnvelope = {
+  data: Prisma.UserCreateManyRoleInput | Prisma.UserCreateManyRoleInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithWhereUniqueWithoutRoleInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRoleInput, Prisma.UserUncheckedUpdateWithoutRoleInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRoleInput, Prisma.UserUncheckedCreateWithoutRoleInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutRoleInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRoleInput, Prisma.UserUncheckedUpdateWithoutRoleInput>
+}
+
+export type UserUpdateManyWithWhereWithoutRoleInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutRoleInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.IntFilter<"User"> | number
+  name?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  roleId?: Prisma.IntNullableFilter<"User"> | number | null
+}
+
+export type UserCreateWithoutPermissionsInput = {
+  name: string
+  password: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  geoPath?: Prisma.GeoPathCreateNestedManyWithoutUserInput
+  todo?: Prisma.TodoItemCreateNestedManyWithoutUserInput
+  session?: Prisma.SessionCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPermissionsInput = {
+  id?: number
+  name: string
+  password: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  roleId?: number | null
+  geoPath?: Prisma.GeoPathUncheckedCreateNestedManyWithoutUserInput
+  todo?: Prisma.TodoItemUncheckedCreateNestedManyWithoutUserInput
+  session?: Prisma.SessionUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPermissionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPermissionsInput, Prisma.UserUncheckedCreateWithoutPermissionsInput>
+}
+
+export type UserUpsertWithWhereUniqueWithoutPermissionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPermissionsInput, Prisma.UserUncheckedUpdateWithoutPermissionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPermissionsInput, Prisma.UserUncheckedCreateWithoutPermissionsInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutPermissionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPermissionsInput, Prisma.UserUncheckedUpdateWithoutPermissionsInput>
+}
+
+export type UserUpdateManyWithWhereWithoutPermissionsInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutPermissionsInput>
+}
+
 export type UserCreateWithoutTodoInput = {
   name: string
   password: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  permissions?: Prisma.PermissionCreateNestedManyWithoutUsersInput
   geoPath?: Prisma.GeoPathCreateNestedManyWithoutUserInput
   session?: Prisma.SessionCreateNestedOneWithoutUserInput
 }
@@ -445,6 +687,8 @@ export type UserUncheckedCreateWithoutTodoInput = {
   password: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  roleId?: number | null
+  permissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUsersInput
   geoPath?: Prisma.GeoPathUncheckedCreateNestedManyWithoutUserInput
   session?: Prisma.SessionUncheckedCreateNestedOneWithoutUserInput
 }
@@ -470,6 +714,8 @@ export type UserUpdateWithoutTodoInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  permissions?: Prisma.PermissionUpdateManyWithoutUsersNestedInput
   geoPath?: Prisma.GeoPathUpdateManyWithoutUserNestedInput
   session?: Prisma.SessionUpdateOneWithoutUserNestedInput
 }
@@ -480,6 +726,8 @@ export type UserUncheckedUpdateWithoutTodoInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  permissions?: Prisma.PermissionUncheckedUpdateManyWithoutUsersNestedInput
   geoPath?: Prisma.GeoPathUncheckedUpdateManyWithoutUserNestedInput
   session?: Prisma.SessionUncheckedUpdateOneWithoutUserNestedInput
 }
@@ -489,6 +737,8 @@ export type UserCreateWithoutGeoPathInput = {
   password: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  permissions?: Prisma.PermissionCreateNestedManyWithoutUsersInput
   todo?: Prisma.TodoItemCreateNestedManyWithoutUserInput
   session?: Prisma.SessionCreateNestedOneWithoutUserInput
 }
@@ -499,6 +749,8 @@ export type UserUncheckedCreateWithoutGeoPathInput = {
   password: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  roleId?: number | null
+  permissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUsersInput
   todo?: Prisma.TodoItemUncheckedCreateNestedManyWithoutUserInput
   session?: Prisma.SessionUncheckedCreateNestedOneWithoutUserInput
 }
@@ -524,6 +776,8 @@ export type UserUpdateWithoutGeoPathInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  permissions?: Prisma.PermissionUpdateManyWithoutUsersNestedInput
   todo?: Prisma.TodoItemUpdateManyWithoutUserNestedInput
   session?: Prisma.SessionUpdateOneWithoutUserNestedInput
 }
@@ -534,6 +788,8 @@ export type UserUncheckedUpdateWithoutGeoPathInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  permissions?: Prisma.PermissionUncheckedUpdateManyWithoutUsersNestedInput
   todo?: Prisma.TodoItemUncheckedUpdateManyWithoutUserNestedInput
   session?: Prisma.SessionUncheckedUpdateOneWithoutUserNestedInput
 }
@@ -543,6 +799,8 @@ export type UserCreateWithoutSessionInput = {
   password: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  permissions?: Prisma.PermissionCreateNestedManyWithoutUsersInput
   geoPath?: Prisma.GeoPathCreateNestedManyWithoutUserInput
   todo?: Prisma.TodoItemCreateNestedManyWithoutUserInput
 }
@@ -553,6 +811,8 @@ export type UserUncheckedCreateWithoutSessionInput = {
   password: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  roleId?: number | null
+  permissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUsersInput
   geoPath?: Prisma.GeoPathUncheckedCreateNestedManyWithoutUserInput
   todo?: Prisma.TodoItemUncheckedCreateNestedManyWithoutUserInput
 }
@@ -578,6 +838,8 @@ export type UserUpdateWithoutSessionInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  permissions?: Prisma.PermissionUpdateManyWithoutUsersNestedInput
   geoPath?: Prisma.GeoPathUpdateManyWithoutUserNestedInput
   todo?: Prisma.TodoItemUpdateManyWithoutUserNestedInput
 }
@@ -588,8 +850,81 @@ export type UserUncheckedUpdateWithoutSessionInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  permissions?: Prisma.PermissionUncheckedUpdateManyWithoutUsersNestedInput
   geoPath?: Prisma.GeoPathUncheckedUpdateManyWithoutUserNestedInput
   todo?: Prisma.TodoItemUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateManyRoleInput = {
+  id?: number
+  name: string
+  password: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserUpdateWithoutRoleInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  permissions?: Prisma.PermissionUpdateManyWithoutUsersNestedInput
+  geoPath?: Prisma.GeoPathUpdateManyWithoutUserNestedInput
+  todo?: Prisma.TodoItemUpdateManyWithoutUserNestedInput
+  session?: Prisma.SessionUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRoleInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  permissions?: Prisma.PermissionUncheckedUpdateManyWithoutUsersNestedInput
+  geoPath?: Prisma.GeoPathUncheckedUpdateManyWithoutUserNestedInput
+  todo?: Prisma.TodoItemUncheckedUpdateManyWithoutUserNestedInput
+  session?: Prisma.SessionUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutRoleInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserUpdateWithoutPermissionsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  geoPath?: Prisma.GeoPathUpdateManyWithoutUserNestedInput
+  todo?: Prisma.TodoItemUpdateManyWithoutUserNestedInput
+  session?: Prisma.SessionUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPermissionsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  geoPath?: Prisma.GeoPathUncheckedUpdateManyWithoutUserNestedInput
+  todo?: Prisma.TodoItemUncheckedUpdateManyWithoutUserNestedInput
+  session?: Prisma.SessionUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutPermissionsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roleId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -598,11 +933,13 @@ export type UserUncheckedUpdateWithoutSessionInput = {
  */
 
 export type UserCountOutputType = {
+  permissions: number
   geoPath: number
   todo: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  permissions?: boolean | UserCountOutputTypeCountPermissionsArgs
   geoPath?: boolean | UserCountOutputTypeCountGeoPathArgs
   todo?: boolean | UserCountOutputTypeCountTodoArgs
 }
@@ -615,6 +952,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPermissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PermissionWhereInput
 }
 
 /**
@@ -638,6 +982,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  roleId?: boolean
+  role?: boolean | Prisma.User$roleArgs<ExtArgs>
+  permissions?: boolean | Prisma.User$permissionsArgs<ExtArgs>
   geoPath?: boolean | Prisma.User$geoPathArgs<ExtArgs>
   todo?: boolean | Prisma.User$todoArgs<ExtArgs>
   session?: boolean | Prisma.User$sessionArgs<ExtArgs>
@@ -650,6 +997,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  roleId?: boolean
+  role?: boolean | Prisma.User$roleArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -658,6 +1007,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  roleId?: boolean
+  role?: boolean | Prisma.User$roleArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -666,21 +1017,30 @@ export type UserSelectScalar = {
   password?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  roleId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "password" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "password" | "createdAt" | "updatedAt" | "roleId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  role?: boolean | Prisma.User$roleArgs<ExtArgs>
+  permissions?: boolean | Prisma.User$permissionsArgs<ExtArgs>
   geoPath?: boolean | Prisma.User$geoPathArgs<ExtArgs>
   todo?: boolean | Prisma.User$todoArgs<ExtArgs>
   session?: boolean | Prisma.User$sessionArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  role?: boolean | Prisma.User$roleArgs<ExtArgs>
+}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  role?: boolean | Prisma.User$roleArgs<ExtArgs>
+}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    role: Prisma.$RolePayload<ExtArgs> | null
+    permissions: Prisma.$PermissionPayload<ExtArgs>[]
     geoPath: Prisma.$GeoPathPayload<ExtArgs>[]
     todo: Prisma.$TodoItemPayload<ExtArgs>[]
     session: Prisma.$SessionPayload<ExtArgs> | null
@@ -691,6 +1051,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     createdAt: Date
     updatedAt: Date
+    roleId: number | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1085,6 +1446,8 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  role<T extends Prisma.User$roleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$roleArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  permissions<T extends Prisma.User$permissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   geoPath<T extends Prisma.User$geoPathArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$geoPathArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GeoPathPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   todo<T extends Prisma.User$todoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$todoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TodoItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   session<T extends Prisma.User$sessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionArgs<ExtArgs>>): Prisma.Prisma__SessionClient<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -1122,6 +1485,7 @@ export interface UserFieldRefs {
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly roleId: Prisma.FieldRef<"User", 'Int'>
 }
     
 
@@ -1371,6 +1735,10 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1441,6 +1809,10 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1507,6 +1879,49 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.role
+ */
+export type User$roleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Role
+   */
+  select?: Prisma.RoleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Role
+   */
+  omit?: Prisma.RoleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RoleInclude<ExtArgs> | null
+  where?: Prisma.RoleWhereInput
+}
+
+/**
+ * User.permissions
+ */
+export type User$permissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Permission
+   */
+  select?: Prisma.PermissionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Permission
+   */
+  omit?: Prisma.PermissionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PermissionInclude<ExtArgs> | null
+  where?: Prisma.PermissionWhereInput
+  orderBy?: Prisma.PermissionOrderByWithRelationInput | Prisma.PermissionOrderByWithRelationInput[]
+  cursor?: Prisma.PermissionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PermissionScalarFieldEnum | Prisma.PermissionScalarFieldEnum[]
 }
 
 /**
