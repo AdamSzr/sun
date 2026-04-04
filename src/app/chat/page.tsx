@@ -1,18 +1,13 @@
 "use client"
 
+import { WsChatCommandClient } from "@fet/chat/commands"
 import { useEffect, useRef, useState } from "react"
-
-interface ChatMessage {
-  type: "message" | "system" | "joined"
-  name?: string
-  text?: string
-}
 
 export default function ChatPage() {
   const [joined, setJoined] = useState(false)
   const [name, setName] = useState("")
   const [nameInput, setNameInput] = useState("")
-  const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [messages, setMessages] = useState<WsCommandClient[]>([])
   const [users, setUsers] = useState<string[]>([])
   const [text, setText] = useState("")
   const wsRef = useRef<WebSocket | null>(null)
@@ -32,15 +27,15 @@ export default function ChatPage() {
     }
 
     ws.onmessage = (event) => {
-      const data = JSON.parse(event.data) as ChatMessage & { users?: string[] }
+      const command = JSON.parse(event.data) as WsChatCommandClient
 
-      if (data.type === "joined") {
+      if (command.type === "joined") {
         setJoined(true)
         setName(playerName)
-      } else if ("users" in data && Array.isArray(data.users)) {
-        setUsers(data.users as string[])
+      } else if ("users" in command && Array.isArray(command.users)) {
+        setUsers(command.users as string[])
       } else {
-        setMessages((prev) => [...prev, data])
+        setMessages((prev) => [...prev, command])
       }
     }
 
@@ -54,9 +49,9 @@ export default function ChatPage() {
 
   function handleJoin(e: React.FormEvent) {
     e.preventDefault()
-    const trimmed = nameInput.trim()
-    if (!trimmed) return
-    connect(trimmed)
+    const name = nameInput.trim()
+    if (!name) return
+    connect(name)
   }
 
   function handleSend(e: React.FormEvent) {
@@ -161,10 +156,10 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: "center",
     justifyContent: "center",
     minHeight: "100vh",
-    background: "#f3f4f6",
+    background: "#263148ff",
   },
   joinBox: {
-    background: "#fff",
+    background: "#7c74abff",
     borderRadius: 12,
     padding: "2rem 2.5rem",
     boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
