@@ -17,8 +17,6 @@ export type WsChatCommandClient = WsChatMessageCommand | {
 const getWs = (path: string = "ws://localhost:3000/ws/chat") => {
   const ws = new WebSocket(path)
 
-
-
   ws.onopen = () => {
     ws.send(JSON.stringify({ type: "join", name: playerName }))
   }
