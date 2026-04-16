@@ -6,6 +6,12 @@
       "request": "launch",
       "name": "Next.js (npm run dev)",
       "command": "npm run dev"
+    },
+    {
+      "type": "node-terminal",
+      "request": "launch",
+      "name": "Next.js (npm run dev:ws)",
+      "command": "npm run dev:ws"
     }
   ]
 }

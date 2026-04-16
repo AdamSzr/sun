@@ -1,9 +1,8 @@
+
+import { chatWsServer } from "./src/features/chat/server"
 import { createServer } from "http"
-import { parse } from "url"
 import next from "next"
-import { WebSocketServer, WebSocket } from "ws"
-import { commands, serverSend, WsChatCommandClient, WsChatCommandServer } from "@fet/chat/commands"
-import { chatWsServer } from "@fet/chat/server"
+import { parse } from "url"
 
 const dev = process.env.NODE_ENV !== "production"
 const hostname = "0.0.0.0"
@@ -19,9 +18,8 @@ app.prepare().then(() => {
     handle(req, res, parsedUrl)
   })
 
-  const wss = chatWsServer(httpServer, "/ws/chat")
+  chatWsServer(httpServer, "/ws/chat")
 
-  
   httpServer.listen(port, hostname, () => {
     console.log(`> Ready on http://${hostname}:${port}`)
   })

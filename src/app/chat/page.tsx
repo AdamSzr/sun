@@ -1,16 +1,17 @@
 "use client"
 
-import { WsChatCommandClient } from "@fet/chat/commands"
+import { ChatWsClient, WsChatCommandClient } from "@fet/chat/client"
+import { WsChatCommandServer } from "@fet/chat/server"
 import { useEffect, useRef, useState } from "react"
 
 export default function ChatPage() {
   const [joined, setJoined] = useState(false)
   const [name, setName] = useState("")
   const [nameInput, setNameInput] = useState("")
-  const [messages, setMessages] = useState<WsCommandClient[]>([])
+  const [messages, setMessages] = useState<WsChatCommandServer[]>([])
   const [users, setUsers] = useState<string[]>([])
   const [text, setText] = useState("")
-  const wsRef = useRef<WebSocket | null>(null)
+  const wsRef = useRef<ChatWsClient | null>(null)
   const messagesEndRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -19,32 +20,28 @@ export default function ChatPage() {
 
   function connect(playerName: string) {
     const protocol = window.location.protocol === "https:" ? "wss" : "ws"
-    const ws = new WebSocket(`${protocol}://${window.location.host}/ws/chat`)
+    const ws = new ChatWsClient(playerName, `${protocol}://${window.location.host}/ws/chat`)
     wsRef.current = ws
 
-    ws.onopen = () => {
-      ws.send(JSON.stringify({ type: "join", name: playerName }))
-    }
+    ws.connect()
 
-    ws.onmessage = (event) => {
-      const command = JSON.parse(event.data) as WsChatCommandClient
-
+    ws.onMessage((command) => {
       if (command.type === "joined") {
         setJoined(true)
         setName(playerName)
-      } else if ("users" in command && Array.isArray(command.users)) {
-        setUsers(command.users as string[])
-      } else {
+      }
+    })
+    ws.onMessage((command) => {
+      if (command.type === "left") {
+        setJoined(false)
+        setName("")
+      }
+    })
+    ws.onMessage((command) => {
+      if (command.type === "message") {
         setMessages((prev) => [...prev, command])
       }
-    }
-
-    ws.onclose = () => {
-      setMessages((prev) => [
-        ...prev,
-        { type: "system", text: "Rozłączono z serwerem." },
-      ])
-    }
+    })
   }
 
   function handleJoin(e: React.FormEvent) {
@@ -56,8 +53,8 @@ export default function ChatPage() {
 
   function handleSend(e: React.FormEvent) {
     e.preventDefault()
-    if (!text.trim() || wsRef.current?.readyState !== WebSocket.OPEN) return
-    wsRef.current.send(JSON.stringify({ type: "message", text }))
+    if (!text.trim()) return
+    wsRef.current?.message(text)
     setText("")
   }
 
@@ -110,10 +107,17 @@ export default function ChatPage() {
 
         <div style={styles.messageList}>
           {messages.map((msg, i) => {
-            if (msg.type === "system") {
+            if (msg.type === "joined") {
               return (
                 <div key={i} style={styles.systemMsg}>
-                  — {msg.text}
+                  — {msg.name} dołączył do czatu
+                </div>
+              )
+            }
+            if (msg.type === "left") {
+              return (
+                <div key={i} style={styles.systemMsg}>
+                  — {msg.name} opuścił czat
                 </div>
               )
             }

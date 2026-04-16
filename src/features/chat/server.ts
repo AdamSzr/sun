@@ -1,34 +1,34 @@
 import { Server } from "http"
 import { WebSocket, WebSocketServer } from "ws"
-import { WsChatMessageCommand } from "./commands"
+import { WsChatMessageCommand } from "./WsChatMessageCommand"
 import { WsChatCommandClient } from "./client"
 
 export type WsChatCommandServer = WsChatMessageCommand | {
   type: "joined"
-  userName: string
+  name: string
 } | {
   type: "left"
-  userName: string
+  name: string
 }
 
 type Client = {
   ws: WebSocket
-  userName: string
+  name: string
 }
 
 export const clients = new Map<WebSocket, Client>()
 
 const chat = {
-  broadcast(data: WsChatCommandServer, exclude?: WebSocket) {
+  broadcast(data: WsChatCommandServer) {
     clients.forEach((client) => {
-      if (client.ws !== exclude && client.ws.readyState === WebSocket.OPEN) {
+      if (client.ws.readyState === WebSocket.OPEN) {
         client.ws.send(JSON.stringify(data))
       }
     })
   },
-  message: (text: string, name: string) => chat.broadcast({ type: "message", text, userName: name }),
-  joined: (name: string) => chat.broadcast({ type: "joined", userName: name }),
-  left: (name: string) => chat.broadcast({ type: "left", userName: name }),
+  message: (text: string, name: string) => chat.broadcast({ type: "message", text, name }),
+  joined: (name: string) => chat.broadcast({ type: "joined", name }),
+  left: (name: string) => chat.broadcast({ type: "left", name }),
 }
 
 export const chatWsServer = (httpServer: Server, wsPath: string) => {
@@ -43,19 +43,19 @@ export const chatWsServer = (httpServer: Server, wsPath: string) => {
       if (!client && command.type !== "join") return
 
       if (command.type === "join") {
-        const userName = command.userName.trim()
-        clients.set(ws, { ws, userName })
+        const name = command.name.trim()
+        clients.set(ws, { ws, name })
 
-        chat.joined(userName)
+        chat.joined(name)
       }
 
       if (command.type === "message") {
-        chat.message(command.text, command.userName)
+        chat.message(command.text, command.name)
       }
 
       if (command.type === "leave") {
         clients.delete(ws)
-        chat.left(command.userName)
+        chat.left(command.name)
       }
     })
 
@@ -64,7 +64,7 @@ export const chatWsServer = (httpServer: Server, wsPath: string) => {
       if (!client) return
 
       clients.delete(ws)
-      chat.left(client.userName)
+      chat.left(client.name)
     })
   })
 

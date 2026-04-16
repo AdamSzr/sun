@@ -1,81 +1,71 @@
-import { WsChatMessageCommand } from "./commands"
-
-const commands = {
-  message: (text: string, userName: string): WsChatMessageCommand => ({ type: "message", text, userName }),
-  join: (userName: string): WsChatCommandClient => ({ type: "join", userName }),
-  leave: (userName: string): WsChatCommandClient => ({ type: "leave", userName }),
-}
+import { WsChatMessageCommand } from "./WsChatMessageCommand"
+import { WsChatCommandServer } from "./server"
 
 export type WsChatCommandClient = WsChatMessageCommand | {
   type: "join"
-  userName: string
+  name: string
 } | {
   type: "leave"
-  userName: string
+  name: string
 }
 
-const getWs = (path: string = "ws://localhost:3000/ws/chat") => {
-  const ws = new WebSocket(path)
+export class ChatWsClient {
+  private ws: WebSocket | null = null
+  private handlers: ((command: WsChatCommandServer) => void)[] = []
+  readonly name: string
 
-  ws.onopen = () => {
-    ws.send(JSON.stringify({ type: "join", name: playerName }))
+  constructor(name: string, private readonly path: string = "ws://localhost:3000/ws/chat") {
+    this.name = name
   }
 
-  ws.onmessage = (event) => {
-    const command = JSON.parse(event.data) as WsChatCommandClient
+  connect() {
+    this.ws = new WebSocket(this.path)
 
-    if (command.type === "joined") {
-      setJoined(true)
-      setName(playerName)
-    } else if ("users" in command && Array.isArray(command.users)) {
-      setUsers(command.users as string[])
-    } else {
-      setMessages((prev) => [...prev, command])
+    this.ws.onopen = () => {
+      this.ws?.send(JSON.stringify({ type: "join", name: this.name }))
+    }
+
+    this.ws.onmessage = (event) => {
+      const command = JSON.parse(event.data) as WsChatCommandServer
+      this.handlers.forEach(handler => handler(command))
+    }
+
+    this.ws.onclose = () => {
+      console.log("Disconnected from server.")
+    }
+
+    this.ws.onerror = (error) => {
+      console.error("WebSocket error:", error)
     }
   }
 
-  ws.onclose = () => {
-    setMessages((prev) => [
-      ...prev,
-      { type: "system", text: "Rozłączono z serwerem." },
-    ])
+  onMessage(handler: (command: WsChatCommandServer) => void) {
+    if (this.handlers.includes(handler)) return false
+
+    this.handlers.push(handler)
+    return true
   }
 
-  return {
-    open: () => ws.send(JSON.stringify({ type: "join", name: playerName })),
-    
+  leave() {
+    this.send({ type: "leave", name: this.name })
+  }
+
+  message(text: string) {
+    this.send({ type: "message", text, name: this.name })
+  }
+
+  close(clearHandlers: boolean = false) {
+    this.ws?.close()
+    this.ws = null
+    if (clearHandlers) this.handlers = []
+  }
+
+  private send(command: WsChatCommandClient) {
+    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
+      console.error("WebSocket is not open.")
+      return
+    }
+
+    this.ws.send(JSON.stringify(command))
   }
 }
-
-
-export const chat = {
-  join: (name: string) => { },
-  joined: (name: string) => { },
-  leave: (name: string) => { },
-  left: (name: string) => { },
-  message: (text: string, userName: string) => { },
-}
-
-// ws.onopen = () => {
-//   ws.send(JSON.stringify({ type: "join", name: playerName }))
-// }
-
-// ws.onmessage = (event) => {
-//   const command = JSON.parse(event.data) as WsChatCommandClient
-
-//   if (command.type === "joined") {
-//     setJoined(true)
-//     setName(playerName)
-//   } else if ("users" in command && Array.isArray(command.users)) {
-//     setUsers(command.users as string[])
-//   } else {
-//     setMessages((prev) => [...prev, command])
-//   }
-// }
-
-// ws.onclose = () => {
-//   setMessages((prev) => [
-//     ...prev,
-//     { type: "system", text: "Rozłączono z serwerem." },
-//   ])
-// }
